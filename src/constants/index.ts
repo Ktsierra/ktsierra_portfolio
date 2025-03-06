@@ -8,21 +8,19 @@ import {
   html,
   css,
   reactjs,
-  redux,
   tailwind,
   nodejs,
-  mongodb,
   git,
-  figma,
   docker,
-  meta,
-  starbucks,
-  tesla,
-  shopify,
+  cneuro,
+  etecsa,
+  jjaaviation,
   carrent,
   jobit,
   tripguide,
   threejs,
+  expo,
+  aws,
 } from "../assets";
 
 export const navLinks = [
@@ -81,9 +79,17 @@ const technologies = [
     icon: reactjs,
   },
   {
-    name: "Redux Toolkit",
-    icon: redux,
+    name: "Expo",
+    icon: expo,
   },
+  {
+    name: 'AWS',
+    icon: aws,
+  },
+  /* {
+    name: "Firebase",
+    icon: firebase,
+  }, */
   {
     name: "Tailwind CSS",
     icon: tailwind,
@@ -91,10 +97,6 @@ const technologies = [
   {
     name: "Node JS",
     icon: nodejs,
-  },
-  {
-    name: "MongoDB",
-    icon: mongodb,
   },
   {
     name: "Three JS",
@@ -105,68 +107,54 @@ const technologies = [
     icon: git,
   },
   {
-    name: "figma",
-    icon: figma,
-  },
-  {
     name: "docker",
     icon: docker,
   },
+/*   {
+    name: "Kubernetes",
+    icon: kubernetes,
+  } */
 ];
 
 const experiences = [
   {
-    title: "React.js Developer",
-    company_name: "Starbucks",
-    icon: starbucks,
-    iconBg: "#383E56",
-    date: "March 2020 - April 2021",
+    title: "Software Developer",
+    company_name: "CNEURO",
+    icon: cneuro,
+    iconBg: "#ffffff",
+    date: "September 2021 - August 2023",
     points: [
-      "Developing and maintaining web applications using React.js and other related technologies.",
-      "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-      "Implementing responsive design and ensuring cross-browser compatibility.",
-      "Participating in code reviews and providing constructive feedback to other developers.",
+      "Designed and implemented Python applications that analyze mobility and balance patterns in senior populations, enhancing research efficiency and data accuracy.",
+      "Contributed to machine learning models that forecast gait speed metrics in elderly populations, improving health outcome predictions through advanced algorithms and cross-team collaboration."
+    ],
+  },
+
+  {
+    title: "Telecom Engineer",
+    company_name: "ETECSA",
+    icon: etecsa,
+    iconBg: "#103680",
+    date: "March 2022 - August 2023",
+    points: [
+      "Led a 10-person team responsible for optical fiber cable distribution and installation, ensuring timely project completion and quality standards",
+      "Executed the deployment of Nokia and Huawei mobile technology infrastructure across Matanzas province, enhancing regional connectivity",
+      "Established VSAT terminal systems in hard-to-reach locations, enabling communication access for underserved communities",
+      "Orchestrated GPON implementation throughout major urban centers in Matanzas province, significantly improving network speed and reliability",
     ],
   },
   {
-    title: "React Native Developer",
-    company_name: "Tesla",
-    icon: tesla,
-    iconBg: "#E6DEDD",
+    title: "IT Manager",
+    company_name: "JJA Aviation",
+    icon: jjaaviation,
+    iconBg: "#ffffff",
     date: "Jan 2021 - Feb 2022",
     points: [
-      "Developing and maintaining web applications using React.js and other related technologies.",
-      "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-      "Implementing responsive design and ensuring cross-browser compatibility.",
-      "Participating in code reviews and providing constructive feedback to other developers.",
+      "Developed full-stack applications including a product lifecycle management system (TypeScript, React, React Native, AWS Infrastructure), and internal web services featuring network documentation (Docusaurus, Firebase) and document indexing (Express, PostgreSQL, Docker)",
+      "Designed and maintained comprehensive network infrastructure utilizing Ubiquiti ecosystem (EdgeSwitches, EdgeRouters, UniFi APs) and Synology NAS systems, while implementing cloud-based 3CX phone system in AWS to enhance communication capabilities",
+      "Orchestrated critical containerized services through Docker deployment, integrating osTicket for support management, Grafana monitoring stack (Prometheus/Telegraf/InfluxDB), MeshCentral for remote management, and CUPS printing solutions",
+      "Established comprehensive security and management infrastructure including Microsoft Entra ID with Intune MDM for device management, and implemented Squid proxy with ELK stack for network monitoring, security analysis, and access control"
     ],
-  },
-  {
-    title: "Web Developer",
-    company_name: "Shopify",
-    icon: shopify,
-    iconBg: "#383E56",
-    date: "Jan 2022 - Jan 2023",
-    points: [
-      "Developing and maintaining web applications using React.js and other related technologies.",
-      "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-      "Implementing responsive design and ensuring cross-browser compatibility.",
-      "Participating in code reviews and providing constructive feedback to other developers.",
-    ],
-  },
-  {
-    title: "Full stack Developer",
-    company_name: "Meta",
-    icon: meta,
-    iconBg: "#E6DEDD",
-    date: "Jan 2023 - Present",
-    points: [
-      "Developing and maintaining web applications using React.js and other related technologies.",
-      "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-      "Implementing responsive design and ensuring cross-browser compatibility.",
-      "Participating in code reviews and providing constructive feedback to other developers.",
-    ],
-  },
+  }
 ];
 
 const testimonials = [

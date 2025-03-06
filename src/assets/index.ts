@@ -19,12 +19,13 @@ import reactjs from "./tech/reactjs.png";
 import redux from "./tech/redux.png";
 import tailwind from "./tech/tailwind.png";
 import typescript from "./tech/typescript.png";
-import threejs from "./tech/threejs.svg";
+import threejs from "./tech/threejs.png";
+import expo from "./tech/expo.webp";
+import aws from "./tech/aws.webp";
 
-import meta from "./company/meta.png";
-import shopify from "./company/shopify.png";
-import starbucks from "./company/starbucks.png";
-import tesla from "./company/tesla.png";
+import cneuro from "./company/cneuro.webp";
+import etecsa from "./company/etecsa.webp";
+import jjaaviation from "./company/jjaaviation.webp";
 
 import carrent from "./carrent.png";
 import jobit from "./jobit.png";
@@ -52,10 +53,11 @@ export {
   tailwind,
   typescript,
   threejs,
-  meta,
-  shopify,
-  starbucks,
-  tesla,
+  expo,
+  aws,
+  cneuro,
+  etecsa,
+  jjaaviation,
   carrent,
   jobit,
   tripguide,
