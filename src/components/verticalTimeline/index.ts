@@ -1,4 +1,4 @@
-import { VerticalTimeline } from './VerticalTimeline';
-import { VerticalTimelineElement } from './VerticalTimelineElement';
+import VerticalTimeline from './VerticalTimeline';
+import VerticalTimelineElement from './VerticalTimelineElement';
 
 export { VerticalTimeline, VerticalTimelineElement };

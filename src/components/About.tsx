@@ -43,7 +43,7 @@ const About = () => {
       <motion.p
         className='mt-4 text-secondary text-[17px] max-w-3xl leading-[30px]'
         variants={fadeIn({ direction: 'up', type: 'tween', delay: 0.1, duration: 1 })} >
-        I&apos;m a skilled software developer and network engineer with extensive experience in building web and mobile applications. My work primarily involves using TypeScript alongside frameworks like Expo, and I deploy robust solutions via CI/CD pipelines and cloud infrastructure. I am passionate about continuous learning and thrive on collaborating closely with clients to design and develop high-performance, scalable, and intuitive solutions that address real business challenges. Partner with me to turn your vision into reality!
+        I&apos;m a skilled software developer and network engineer with extensive experience in building web and mobile applications. My work primarily involves using TypeScript alongside frameworks like Expo and deploying robust solutions via CI/CD pipelines and cloud infrastructure. I am passionate about continuous learning and thrive on collaborating closely with clients to design and develop high-performance, scalable, and intuitive solutions that address real business challenges. Partner with me to turn your vision into reality!
       </motion.p>
 
       <div className='mt-20 flex flex-wrap gap-10'>
