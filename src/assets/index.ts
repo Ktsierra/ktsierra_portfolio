@@ -22,6 +22,8 @@ import typescript from "./tech/typescript.png";
 import threejs from "./tech/threejs.png";
 import expo from "./tech/expo.webp";
 import aws from "./tech/aws.webp";
+import firebase from "./tech/firebase.webp";
+import kubernetes from "./tech/kubernetes.webp";
 
 import cneuro from "./company/cneuro.webp";
 import etecsa from "./company/etecsa.webp";
@@ -55,6 +57,8 @@ export {
   threejs,
   expo,
   aws,
+  firebase,
+  kubernetes,
   cneuro,
   etecsa,
   jjaaviation,

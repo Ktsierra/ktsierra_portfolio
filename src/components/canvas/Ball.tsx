@@ -11,7 +11,7 @@ const Ball = ({ texture }: {texture: string}) => {
       <ambientLight intensity={0.2} />
       <directionalLight position={[0, 0, 0.05]} />
       <mesh castShadow receiveShadow scale={2.75}>
-        <icosahedronGeometry args={[1, 1]} />
+        <icosahedronGeometry args={[1, 5]} />
         <meshStandardMaterial
           color={'#fff8eb'}
           polygonOffset

@@ -21,6 +21,8 @@ import {
   threejs,
   expo,
   aws,
+  firebase,
+  kubernetes,
 } from "../assets";
 
 export const navLinks = [
@@ -86,10 +88,10 @@ const technologies = [
     name: 'AWS',
     icon: aws,
   },
-  /* {
+  {
     name: "Firebase",
     icon: firebase,
-  }, */
+  },
   {
     name: "Tailwind CSS",
     icon: tailwind,
@@ -110,10 +112,10 @@ const technologies = [
     name: "docker",
     icon: docker,
   },
-/*   {
+  {
     name: "Kubernetes",
     icon: kubernetes,
-  } */
+  }
 ];
 
 const experiences = [

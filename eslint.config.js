@@ -64,6 +64,8 @@ export default tseslint.config(
         'polygonOffset',
         'polygonOffsetFactor',
         'flatShading',
+        'position-y',
+        'rotation-y',
         ] }],
     },
   },
