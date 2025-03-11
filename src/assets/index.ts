@@ -29,7 +29,7 @@ import cneuro from "./company/cneuro.webp";
 import etecsa from "./company/etecsa.webp";
 import jjaaviation from "./company/jjaaviation.webp";
 
-import carrent from "./carrent.png";
+import skyvault from "./work/skyvault-2.webp";
 import jobit from "./jobit.png";
 import tripguide from "./tripguide.png";
 
@@ -62,7 +62,7 @@ export {
   cneuro,
   etecsa,
   jjaaviation,
-  carrent,
+  skyvault,
   jobit,
   tripguide,
 };

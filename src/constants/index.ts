@@ -15,7 +15,7 @@ import {
   cneuro,
   etecsa,
   jjaaviation,
-  carrent,
+  skyvault,
   jobit,
   tripguide,
   threejs,
@@ -188,24 +188,24 @@ const testimonials = [
 
 const projects = [
   {
-    name: "Car Rent",
+    name: "SkyVault",
     description:
         "Web-based platform that allows users to search, book, and manage car rentals from various providers, providing a convenient and efficient solution for transportation needs.",
     tags: [
       {
-        name: "react",
+        name: "react-native",
         color: "blue-text-gradient",
       },
       {
-        name: "mongodb",
-        color: "green-text-gradient",
+        name: "amplify",
+        color: "orange-text-gradient",
       },
       {
-        name: "tailwind",
-        color: "pink-text-gradient",
+        name: "expo",
+        color: "black-text-gradient",
       },
     ],
-    image: carrent,
+    image: skyvault,
     source_code_link: "https://github.com/",
   },
   {
