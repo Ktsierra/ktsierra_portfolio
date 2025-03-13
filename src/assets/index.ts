@@ -24,6 +24,7 @@ import expo from "./tech/expo.webp";
 import aws from "./tech/aws.webp";
 import firebase from "./tech/firebase.webp";
 import kubernetes from "./tech/kubernetes.webp";
+import python from "./tech/python.webp";
 
 import cneuro from "./company/cneuro.webp";
 import etecsa from "./company/etecsa.webp";
@@ -61,6 +62,7 @@ export {
   threejs,
   expo,
   aws,
+  python,
   firebase,
   kubernetes,
   cneuro,

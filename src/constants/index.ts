@@ -22,6 +22,7 @@ import {
   threejs,
   expo,
   aws,
+  python,
   firebase,
   kubernetes,
   testFidel,
@@ -115,7 +116,7 @@ const technologies = [
   },
   {
     name: "Python",
-    icon: javascript,
+    icon: python,
     link: ''
   },
   {
