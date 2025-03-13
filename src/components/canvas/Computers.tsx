@@ -1,12 +1,16 @@
 import { Suspense, useEffect, useState } from "react";
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
 import CanvasLoader from "../Loader";
 
 
 const Computers = ({ isMobile }: { isMobile: boolean }) => {
-  const computer = useGLTF('./desktop_pc/scene.gltf', true);
-  // const computer = useGLTF('./logo/logo.gltf', true);
+  // const computer = useGLTF('./desktop_pc/scene.gltf', true);
+  const computer = useGLTF('./logo/scene.gltf', true);
+
+  useFrame((_state, delta) => {
+    computer.scene.rotation.y += delta;
+  });
 
   return (
     <mesh>
@@ -23,12 +27,12 @@ const Computers = ({ isMobile }: { isMobile: boolean }) => {
       />
       <primitive
         object={computer.scene}
-        scale={isMobile ? 0.7 : 0.75}
+        /*         scale={isMobile ? 0.7 : 0.75}
         position={isMobile ? [0, -3, -2.2] : [0, -3.25, -1.5]}
-        rotation={[-0.01, -0.35, -0.1]}
-        /*         scale={30}
-        rotate={[0.5, 1.5, 0.5]}
-        position={[-3.5, -1.5, 0]} */
+        rotation={[-0.01, -0.35, -0.1]} */
+        scale={70}
+        rotation={[0, 0, 0]}
+        position={[0, -1, 0]}
       />
     </mesh>
   );
