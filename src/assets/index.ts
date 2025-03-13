@@ -30,8 +30,12 @@ import etecsa from "./company/etecsa.webp";
 import jjaaviation from "./company/jjaaviation.webp";
 
 import skyvault from "./work/skyvault-2.webp";
-import jobit from "./jobit.png";
-import tripguide from "./tripguide.png";
+import jjadocs from "./work/jjadocs.webp";
+import novaedge from "./work/novaedge.webp";
+import novaedgeIcon from "./work/novaedge.webp";
+
+import testFidel from "./testimonial/fidel.webp";
+import testRamon from "./testimonial/ramon.webp";
 
 export {
   logo,
@@ -63,6 +67,9 @@ export {
   etecsa,
   jjaaviation,
   skyvault,
-  jobit,
-  tripguide,
+  jjadocs,
+  novaedge,
+  novaedgeIcon,
+  testFidel,
+  testRamon,
 };

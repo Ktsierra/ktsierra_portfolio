@@ -6,6 +6,7 @@ import CanvasLoader from "../Loader";
 
 const Computers = ({ isMobile }: { isMobile: boolean }) => {
   const computer = useGLTF('./desktop_pc/scene.gltf', true);
+  // const computer = useGLTF('./logo/logo.gltf', true);
 
   return (
     <mesh>
@@ -25,6 +26,9 @@ const Computers = ({ isMobile }: { isMobile: boolean }) => {
         scale={isMobile ? 0.7 : 0.75}
         position={isMobile ? [0, -3, -2.2] : [0, -3.25, -1.5]}
         rotation={[-0.01, -0.35, -0.1]}
+        /*         scale={30}
+        rotate={[0.5, 1.5, 0.5]}
+        position={[-3.5, -1.5, 0]} */
       />
     </mesh>
   );
@@ -53,7 +57,7 @@ const ComputersCanvas = () => {
 
   return (
     <Canvas
-      frameloop="demand"
+      // frameloop="demand"
       shadows
       camera={{ position: [20, 3, 5], fov: 25 }}
       gl={{ preserveDrawingBuffer: true }}

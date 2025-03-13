@@ -28,7 +28,7 @@ const Ball = ({ texture }: {texture: string}) => {
   );
 };
 
-const BallCanvas = ({ icon }: {icon: string}) => {
+const BallCanvas = ({ icon }: { icon: string }) => {
   return (
     <Canvas
       gl={{ preserveDrawingBuffer: true }}

@@ -16,13 +16,16 @@ import {
   etecsa,
   jjaaviation,
   skyvault,
-  jobit,
-  tripguide,
+  jjadocs,
+  novaedge,
+  novaedgeIcon,
   threejs,
   expo,
   aws,
   firebase,
   kubernetes,
+  testFidel,
+  testRamon
 } from "../assets";
 
 export const navLinks = [
@@ -63,58 +66,77 @@ const technologies = [
   {
     name: "HTML 5",
     icon: html,
+    link: ''
   },
   {
     name: "CSS 3",
     icon: css,
+    link: ''
   },
   {
     name: "JavaScript",
     icon: javascript,
+    link: ''
   },
   {
     name: "TypeScript",
     icon: typescript,
+    link: ''
   },
   {
     name: "React JS",
     icon: reactjs,
+    link: ''
   },
   {
     name: "Expo",
     icon: expo,
+    link: ''
   },
   {
     name: 'AWS',
     icon: aws,
+    link: ''
   },
   {
     name: "Firebase",
     icon: firebase,
+    link: ''
   },
   {
     name: "Tailwind CSS",
     icon: tailwind,
+    link: ''
   },
   {
     name: "Node JS",
     icon: nodejs,
+    link: ''
+  },
+  {
+    name: "Python",
+    icon: javascript,
+    link: ''
   },
   {
     name: "Three JS",
     icon: threejs,
+    link: ''
   },
   {
     name: "git",
     icon: git,
+    link: ''
   },
   {
     name: "docker",
     icon: docker,
+    link: ''
   },
   {
     name: "Kubernetes",
     icon: kubernetes,
+    link: ''
   }
 ];
 
@@ -162,27 +184,21 @@ const experiences = [
 const testimonials = [
   {
     testimonial:
-        "I thought it was impossible to make a website as beautiful as our product, but Rick proved me wrong.",
-    name: "Sara Lee",
-    designation: "CFO",
-    company: "Acme Co",
-    image: "https://randomuser.me/api/portraits/women/4.jpg",
+        "He demonstrated mastery of Python programming while implementing and validating an Artificial Neural Networt and successfully developed a wireless system for human gait analysis incorporating signal processing techniques.",
+    name: "Fidel Montero",
+    linkedIn: "https://www.linkedin.com/in/fidel-hernandez-25b7b370/",
+    designation: "Vice Dean - R&PS, Faculty",
+    company: "Telecommunications, CUJAE",
+    image: testFidel,
   },
   {
     testimonial:
-        "I've never met a web developer who truly cares about their clients' success like Rick does.",
-    name: "Chris Brown",
-    designation: "COO",
-    company: "DEF Corp",
-    image: "https://randomuser.me/api/portraits/men/5.jpg",
-  },
-  {
-    testimonial:
-        "After Rick optimized our website, our traffic increased by 50%. We can't thank them enough!",
-    name: "Lisa Wang",
-    designation: "CTO",
-    company: "456 Enterprises",
-    image: "https://randomuser.me/api/portraits/women/6.jpg",
+        "FILL",
+    name: "Ramon Mompeller",
+    linkedIn: 'https://www.linkedin.com/in/ramon-mompeller-64097a16a/',
+    designation: "CEO",
+    company: "JJA Aviation",
+    image: testRamon,
   },
 ];
 
@@ -190,7 +206,7 @@ const projects = [
   {
     name: "SkyVault",
     description:
-        "Web-based platform that allows users to search, book, and manage car rentals from various providers, providing a convenient and efficient solution for transportation needs.",
+        "Multiplatform mobile and web application that enables JJA Aviation to manage maintenance records and securely share aircraft component lifecycle information and images with clients and between departments.",
     tags: [
       {
         name: "react-native",
@@ -206,40 +222,21 @@ const projects = [
       },
     ],
     image: skyvault,
-    source_code_link: "https://github.com/",
+    source_code_link: undefined,
+    app_link: undefined,
+    app_icon: undefined
   },
   {
-    name: "Job IT",
+    name: "JJA Aviation Docs",
     description:
-        "Web application that enables users to search for job openings, view estimated salary ranges for positions, and locate available jobs based on their current location.",
+        "Web application that documents JJA Aviation's technical infrastructure and maintenance systems configurations, providing authorized personnel with secure access to essential operational information.",
     tags: [
       {
         name: "react",
         color: "blue-text-gradient",
       },
       {
-        name: "restapi",
-        color: "green-text-gradient",
-      },
-      {
-        name: "scss",
-        color: "pink-text-gradient",
-      },
-    ],
-    image: jobit,
-    source_code_link: "https://github.com/",
-  },
-  {
-    name: "Trip Guide",
-    description:
-        "A comprehensive travel booking platform that allows users to book flights, hotels, and rental cars, and offers curated recommendations for popular destinations.",
-    tags: [
-      {
-        name: "nextjs",
-        color: "blue-text-gradient",
-      },
-      {
-        name: "supabase",
+        name: "docusaurus",
         color: "green-text-gradient",
       },
       {
@@ -247,9 +244,57 @@ const projects = [
         color: "pink-text-gradient",
       },
     ],
-    image: tripguide,
-    source_code_link: "https://github.com/",
+    image: jjadocs,
+    source_code_link: undefined,
+    app_link: undefined,
+    app_icon: undefined
   },
+  {
+    name: "NovaEdge Tech Website",
+    description:
+        "Simple, effective company landing page focused on connecting with potential clients. Features a clean design with easy-to-use contact forms and clear information about my services. Currently refining mobile responsiveness and performance.",
+    tags: [
+      {
+        name: "three.js",
+        color: "violet-text-gradient",
+      },
+      {
+        name: "typescript",
+        color: "blue-text-gradient",
+      },
+      {
+        name: "vercel",
+        color: "black-text-gradient",
+      },
+    ],
+    image: novaedge,
+    source_code_link: "https://github.com/Ktsierra/novaedgetech_web",
+    app_link: "https://novaedgetechnology.com",
+    app_icon: novaedgeIcon
+  },
+/*   {
+    name: "Verde",
+    description:
+        "Multiplatform application designed to help home gardeners users, still in development",
+    tags: [
+      {
+        name: "firebase",
+        color: "orange-text-gradient",
+      },
+      {
+        name: "react-native",
+        color: "blue-text-gradient",
+      },
+      {
+        name: "expo",
+        color: "black-text-gradient",
+      },
+    ],
+    image: novaedge,
+    source_code_link: undefined,
+    app_link: undefined,
+    app_icon: undefined
+  }, */
 ];
 
 export { services, technologies, experiences, testimonials, projects };

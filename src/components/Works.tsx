@@ -6,12 +6,14 @@ import SectionWrapper from '../hoc/SectionWrapper';
 import { projects } from '../constants';
 import { fadeIn, textVariant } from '../utils/motion';
 
-const ProjectCard = ({ name, description, tags, image, source_code_link, index }: {
+const ProjectCard = ({ name, description, tags, image, source_code_link, app_link, app_icon, index }: {
   name: string;
   description: string;
   tags: { name: string; color: string }[];
   image: string;
-  source_code_link: string;
+  source_code_link: string | undefined;
+  app_link: string | undefined;
+  app_icon: string | undefined;
   index: number;
 }) => {
   return (
@@ -30,18 +32,34 @@ const ProjectCard = ({ name, description, tags, image, source_code_link, index }
             className='w-full h-full object-cover rounded-2xl'
           />
 
+
           <div className='absolute inset-0 flex justify-end m-3 card-img-hover'>
-            <div
-              onClick={() => window.open(source_code_link, '_blank')}
-              className='black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer'
-            >
-              <img
-                src={github}
-                alt='github'
-                className='w-3/4 h-3/4 object-contain'
-              />
-            </div>
+            { source_code_link && (
+              <div
+                onClick={() => window.open(source_code_link)}
+                className='black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer'
+              >
+                <img
+                  src={github}
+                  alt='github'
+                  className='w-3/4 h-3/4 object-contain'
+                />
+              </div>
+            )}
+            { app_link && (
+              <div
+                onClick={() => window.open(app_link)}
+                className='black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer'
+              >
+                <img
+                  src={app_icon}
+                  alt='github'
+                  className='w-3/4 h-3/4 object-contain'
+                />
+              </div>
+            )}
           </div>
+
         </div>
 
         <div className='mt-5'>

@@ -4,13 +4,14 @@ import SectionWrapper from '../hoc/SectionWrapper';
 import { fadeIn, textVariant } from '../utils/motion';
 import { testimonials } from '../constants';
 
-const FeedbackCard = ({ index, testimonial, name, designation, company, image }: {
+const FeedbackCard = ({ index, testimonial, name, designation, company, image, linkedIn }: {
   index: number;
   testimonial: string;
   name: string;
   designation: string;
   company: string;
   image: string;
+  linkedIn: string;
 }) => (
   <motion.div
     variants={fadeIn({ direction: undefined, type: 'spring', delay: index * 0.5, duration: 0.75 })}
@@ -22,7 +23,10 @@ const FeedbackCard = ({ index, testimonial, name, designation, company, image }:
 
       <div className='mt-7 flex justify-between items-center gap-1'>
         <div className='flex-1 flex flex-col'>
-          <p className='text-white font-medium text-[16px]'>
+          <p
+            className='text-white font-medium text-[16px] cursor-pointer hover:text-blue-400'
+            onClick={() => window.open(linkedIn)}
+          >
             <span className='blue-text-gradient'>@</span>{name}
           </p>
           <p className='mt-1 text-secondary text-[12px]'>
