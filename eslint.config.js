@@ -46,6 +46,7 @@ export default tseslint.config(
       'array-bracket-spacing': ['error', 'never'],
       'comma-spacing': ['error', { 'before': false, 'after': true }],
       'semi': ['warn', 'always'],
+      'react/prop-types': 'off',
       'react/no-unknown-property': ['error', { ignore: [
         'intensity',
         'groundColor', 
