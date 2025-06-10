@@ -111,6 +111,6 @@ const Works = () => {
   );
 };
 
-const WrappedWorks = SectionWrapper({ children: <Works />, idName: 'works' });
+const WrappedWorks = SectionWrapper({ children: <Works />, idName: 'work' });
 
 export default WrappedWorks;
