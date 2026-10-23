@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import ScrollManager from './components/ScrollManager';
 import SkipLink from './components/SkipLink';
+import HeroExhibit from './components/HeroExhibit';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 
@@ -32,7 +33,7 @@ const App = () => (
     <ScrollManager />
     <Routes>
       <Route element={<Layout />}>
-        <Route index element={<Home />} />
+        <Route index element={<Home hero={<HeroExhibit />} />} />
         <Route path="work/:slug" element={<CaseStudy />} />
         <Route path="*" element={<NotFound />} />
       </Route>

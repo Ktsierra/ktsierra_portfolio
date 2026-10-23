@@ -107,6 +107,25 @@ export const site = {
     ] satisfies PlateRow[],
   },
 
+  /** Branch B: the hero's 3D exhibit. The plate becomes its inspection tag with five rows. */
+  exhibit: {
+    ariaLabel: 'Interactive 3D model of Jose’s hand-made JS logo. Drag to rotate.',
+    figure: 'Fig. 0 · <JS/>',
+    hint: 'Drag to rotate',
+    credit: ['Modeled by hand in Blender', 'Rendered live in Three.js'],
+    model: 'exhibit/js.glb',
+    poster: { src: 'exhibit/poster.webp', width: 1296, height: 696 },
+    /** Q22: 'paper' (default), 'graphite' or 'signal'. The poster is rendered in paper. */
+    material: 'paper' as 'paper' | 'graphite' | 'signal',
+    plateRows: [
+      { label: 'Name', value: 'Jose Sierra', strong: true },
+      { label: 'Role', value: 'Full-stack, cloud & DevOps engineer' },
+      { label: 'Base', value: 'South Florida · remote or relocation' },
+      { label: 'Cert', value: 'AWS Certified Cloud Practitioner' },
+      { label: 'OSS', value: 'amplify-data #671', href: OSS_PR_URL, suffix: ' · merged' },
+    ] satisfies PlateRow[],
+  },
+
   capabilities: {
     ariaLabel: 'What I do',
     items: [
