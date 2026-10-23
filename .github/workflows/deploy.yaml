@@ -24,10 +24,6 @@ jobs:
       
       - name: Build
         run: npm run build
-        env:
-          VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
-          VITE_EMAILJS_SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID }}
-          VITE_EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}
       
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
@@ -35,3 +31,5 @@ jobs:
           folder: dist
           branch: gh-pages
           clean: true
+          # Branch previews live under preview/ on gh-pages; don't wipe them on a prod deploy
+          clean-exclude: preview

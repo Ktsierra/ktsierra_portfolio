@@ -1,54 +1,70 @@
-# React + TypeScript + Vite
+# ktsierra_portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Jose Sierra's portfolio: <https://ktsierra.github.io/ktsierra_portfolio/>
 
-Currently, two official plugins are available:
+The "Data Plate" design: an aviation technical manual look, with paper, ink, hairline rules and one signal orange.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Stack
 
-## Expanding the ESLint configuration
+- Vite, React 19, TypeScript (strict), react-router-dom
+- Tailwind CSS v4. The tokens live in `src/index.css` (`@theme`)
+- Self-hosted fonts: Archivo variable (with the `wdth` axis) and JetBrains Mono, from `@fontsource`
+- No other runtime dependencies. Motion is CSS plus one IntersectionObserver hook (`src/hooks/useInView.ts`)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```
+src/
+  content/site.ts         all home-page copy, links, projects, experience
+  content/skyvault.ts     the SkyVault case study
+  content/caseStudies.ts  case-study registry (slug → content)
+  content/types.ts        content types
+  components/             Header, IdentPlate, ArchDiagram, Pipeline, Project*, Reveal, ...
+  pages/                  Home, CaseStudy (generic), NotFound
+scripts/
+  postbuild.mjs           copies dist/index.html to dist/404.html (SPA fallback on Pages)
+  og.html, render-static.mjs   source and renderer for public/og.png and the favicon PNGs
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Editing content
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+All text lives in `src/content/`. Components never hard-code copy.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+- Placeholders such as `[EMAIL]` and `[LINKEDIN_URL]` are listed in the `TODO` block at the top of `src/content/site.ts`. Fill in the constants just below that block and every use updates.
+- The "Open to roles" badge is `site.status.visible`.
+- **To add a case study,** create `src/content/<slug>.ts` that exports a `CaseStudy` (copy `skyvault.ts`), then add it to `src/content/caseStudies.ts`. The case study is served at `/work/<slug>`.
+- **Decision records** (`decisions.items`): only add confirmed ones. The section hides itself while the list is empty.
+- **The NovaEdge loop** (`work.cards[0].media`): set `poster`, `mp4` and `webm` to files in `public/`. Keep the video under ~1.5 MB. Until then a labelled placeholder renders.
+- **Copy style:** no em dashes or en dashes. Use a period, colon, comma or ` · `. Date ranges use an arrow: `2023 → Now`.
+
+## Develop
+
+```sh
+npm install
+npm run dev      # http://localhost:5173/ktsierra_portfolio/
+npm run lint
+npm run build    # tsc -b, vite build, then postbuild writes 404.html
+npm run preview
+```
+
+## Deploy
+
+Pushing to `main` runs `.github/workflows/deploy.yaml`, which builds the site and publishes `dist/` to the `gh-pages` branch. The workflow leaves `preview/` alone. `npm run deploy` does the same from your machine.
+
+Vite's `base` comes from `VITE_BASE` and defaults to `/ktsierra_portfolio/`.
+
+### Branch previews
+
+Each redesign branch can be published into a subfolder of `gh-pages`, leaving the live root untouched:
+
+```sh
+VITE_BASE=/ktsierra_portfolio/preview/a/ npm run build && npx gh-pages -d dist --dest preview/a --add
+VITE_BASE=/ktsierra_portfolio/preview/b/ npm run build && npx gh-pages -d dist --dest preview/b --add
+```
+
+Reloading a deep link such as `/work/skyvault` inside a preview folder returns a 404. The SPA fallback only works at the root, which is fine for previews.
+
+### Regenerating the OG image and favicons
+
+```sh
+npm i --no-save playwright && npx playwright install chromium
+node scripts/render-static.mjs
 ```
