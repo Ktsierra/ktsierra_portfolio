@@ -329,7 +329,6 @@ export const site = {
     title: 'Engineer by training, builder by habit.',
     paragraphs: [
       'I started in telecom, pulling fiber and lighting up cell sites, and in research, writing Python for gait-analysis models. Today I write TypeScript across the stack and run the infrastructure of an aviation maintenance company, so the code I ship gets used on a shop floor the next morning.',
-      'I’m looking for a software team (product, cloud, network or DevOps engineering) where owning both the code and how it runs is the job, not a side quest.',
     ],
     testimonial: {
       quote:

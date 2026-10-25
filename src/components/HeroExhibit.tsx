@@ -15,6 +15,9 @@ const HeroExhibit = () => (
           variant="tag"
           className="plate-in relative z-10 -mt-[clamp(56px,8vw,120px)] w-[min(420px,92%)]"
         />
+        <p className="m-0 mt-5 text-right font-mono text-[11px] leading-[1.5] text-muted sm:hidden">
+          {site.exhibit.credit.join(' · ')}
+        </p>
       </div>
     </div>
   </section>

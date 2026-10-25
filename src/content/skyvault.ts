@@ -32,7 +32,7 @@ export const skyvault: CaseStudy = {
   ],
   architecture: {
     intro:
-      'Serverless on AWS, defined in TypeScript with Amplify Gen 2. Every request carries a tenant-scoped token; every write goes through a Lambda that checks it.',
+      'Serverless on AWS, defined in TypeScript with Amplify Gen 2. Every request carries a tenant-scoped token; every business write goes through a Lambda that checks it.',
     diagram: {
       figure: 'Fig. 2 · System overview',
       meta: 'Rev 2026-10',
@@ -48,13 +48,13 @@ export const skyvault: CaseStudy = {
           {
             kind: 'API',
             title: 'AWS AppSync',
-            note: 'Group-based @auth on reads · none data source for pushed updates · API key for share pages',
+            note: 'Group-based auth on reads · pushed updates',
             tone: 'primary',
           },
           {
             kind: 'Auth',
-            title: 'Cognito · 4 Lambda triggers',
-            note: 'Pre-sign-up, post-confirmation and pre-auth gate tenant and subdomain · pre-token v2 injects permission IDs',
+            title: 'Cognito · Lambda triggers',
+            note: 'Permission IDs in the token',
             tone: 'highlight',
           },
         ],
@@ -86,7 +86,7 @@ export const skyvault: CaseStudy = {
   running: [
     {
       label: 'Environments',
-      body: 'Sandbox, dev, stage and prod. Sentry picks up every branch on deploy; PostHog has a project per environment, with dev collecting every feature branch.',
+      body: 'Sandbox, dev, stage and prod, each tracked in Sentry and PostHog.',
     },
     { label: 'Testing', body: 'CI runs unit and integration stages; integration tests sign in through a dedicated Cognito app client and exercise the deployed API.' },
     { label: 'Sharing', body: 'Restricted media share links, unlocked with a one-time password sent by email.' },

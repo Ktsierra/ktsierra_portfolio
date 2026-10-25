@@ -95,7 +95,7 @@ const JsExhibit = () => {
       <Corner pos="bottom-3 left-3 border-b-2 border-l-2" />
       <Corner pos="bottom-3 right-3 border-b-2 border-r-2" />
 
-      <figcaption className="label-sm relative z-10 flex items-center justify-between gap-3 px-10 pt-[18px] text-muted max-sm:px-8">
+      <figcaption className="label-sm relative z-10 flex items-center justify-between gap-3 px-10 pt-[18px] whitespace-nowrap text-muted max-sm:px-6">
         <span>{exhibit.figure}</span>
         <span className="inline-flex items-center gap-2">
           <RotateIcon />
@@ -123,7 +123,9 @@ const JsExhibit = () => {
         />
       </div>
 
-      <p className="relative z-10 m-0 self-end px-10 pb-[22px] text-right font-mono text-[11px] leading-[1.5] text-muted max-sm:px-8">
+      {/* Credit top-left, under the label: the ident plate covers the bottom corner. Out of the flow so
+          the model keeps its space; on phones it moves below the plate (see HeroExhibit) */}
+      <p className="absolute top-[42px] left-10 z-10 m-0 font-mono text-[11px] leading-[1.5] text-muted max-sm:hidden">
         {exhibit.credit[0]}<br />{exhibit.credit[1]}
       </p>
     </figure>
