@@ -43,7 +43,7 @@ const ContactForm = () => {
   };
 
   return (
-    <form onSubmit={onSubmit} aria-labelledby={`${id}-title`} className="flex flex-col gap-5 border-[1.5px] border-ink bg-panel p-[clamp(20px,3vw,32px)]">
+    <form onSubmit={onSubmit} aria-labelledby={`${id}-title`} className="flex w-full max-w-[560px] flex-col gap-5 border-[1.5px] border-ink bg-panel p-[clamp(20px,3vw,32px)]">
       <h3 id={`${id}-title`} className="label m-0">{form.title}</h3>
 
       <div>
@@ -56,7 +56,7 @@ const ContactForm = () => {
       </div>
       <div>
         <label htmlFor={`${id}-message`} className={label}>{form.message}</label>
-        <textarea id={`${id}-message`} name="message" required rows={5} maxLength={5000} className={`${field} resize-y py-3 leading-[1.5]`} />
+        <textarea id={`${id}-message`} name="message" required rows={4} maxLength={5000} className={`${field} resize-y py-3 leading-[1.5]`} />
       </div>
       <div aria-hidden="true" className="sr-only">
         <label htmlFor={`${id}-company`}>Company</label>
