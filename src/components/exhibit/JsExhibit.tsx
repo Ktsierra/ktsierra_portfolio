@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { site } from '../../content/site';
-import type { ExhibitMaterial, Viewer } from './viewer';
+import type { Viewer } from './viewer';
 import { useInView } from '../../hooks/useInView';
 
 const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
@@ -27,34 +27,17 @@ const whenIdle = (cb: () => void) => {
 };
 
 /**
- * Fig. 0: the dark viewport with the <JS/> model. Shows the poster immediately; once the page
- * is idle and the figure is on screen it lazy-loads the three.js viewer and crossfades to it.
- * Without WebGL, or on any failure, the poster simply stays.
+ * Fig. 0: the light (panel) viewport with the graphite <JS/> model. Shows the poster immediately;
+ * once the page is idle and the figure is on screen it lazy-loads the three.js viewer and
+ * crossfades to it. Without WebGL, or on any failure, the poster simply stays.
+ *
+ * The poster is a capture of this same stage at the resting pose, so it lines up with the canvas.
  */
-interface Props {
-  material: ExhibitMaterial;
-  /** Fires once the live model has replaced the poster */
-  onLive?: () => void;
-}
-
-/** Graphite reads on a light viewport (as in the looks board); paper and signal on the dark one */
-const skins = {
-  dark: { figure: 'bg-ink', text: 'text-muted-dark', ring: 'border-line-2' },
-  light: { figure: 'bg-panel', text: 'text-muted', ring: 'border-plate-rule' },
-};
-
-const JsExhibit = ({ material, onLive }: Props) => {
+const JsExhibit = () => {
   const { exhibit } = site;
   const [figRef, seen] = useInView<HTMLElement>('0px');
   const stageRef = useRef<HTMLDivElement>(null);
-  const viewerRef = useRef<Viewer>(undefined);
-  const initialMaterial = useRef(material);
-  const onLiveRef = useRef(onLive);
   const [live, setLive] = useState(false);
-  const skin = skins[material === 'graphite' ? 'light' : 'dark'];
-
-  useEffect(() => { onLiveRef.current = onLive; }, [onLive]);
-  useEffect(() => { viewerRef.current?.setMaterial(material); }, [material]);
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -80,17 +63,12 @@ const JsExhibit = ({ material, onLive }: Props) => {
           viewer = createViewer({
             container: stage,
             modelUrl: asset(exhibit.model),
-            material: initialMaterial.current,
             reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
             // ?force3d renders the model even without a GPU, for testing on such machines
             allowSoftware: new URLSearchParams(window.location.search).has('force3d'),
-            onReady: () => {
-              setLive(true);
-              onLiveRef.current?.();
-            },
-            onError: () => { viewer?.dispose(); viewer = undefined; viewerRef.current = undefined; },
+            onReady: () => { setLive(true); },
+            onError: () => { viewer?.dispose(); viewer = undefined; },
           });
-          viewerRef.current = viewer;
           sync();
         })
         // No WebGL, or the chunk failed: keep the poster, no error UI
@@ -103,7 +81,6 @@ const JsExhibit = ({ material, onLive }: Props) => {
       io.disconnect();
       document.removeEventListener('visibilitychange', sync);
       viewer?.dispose();
-      viewerRef.current = undefined;
     };
   }, [seen, exhibit.model]);
 
@@ -111,14 +88,14 @@ const JsExhibit = ({ material, onLive }: Props) => {
     <figure
       ref={figRef}
       aria-label={exhibit.ariaLabel}
-      className={`relative m-0 ml-[10%] flex aspect-[5/4] flex-col overflow-hidden border-[1.5px] border-ink transition-colors duration-300 ${skin.figure}`}
+      className="relative m-0 ml-[10%] flex aspect-[5/4] flex-col overflow-hidden border-[1.5px] border-ink bg-panel"
     >
       <Corner pos="top-3 left-3 border-t-2 border-l-2" />
       <Corner pos="top-3 right-3 border-t-2 border-r-2" />
       <Corner pos="bottom-3 left-3 border-b-2 border-l-2" />
       <Corner pos="bottom-3 right-3 border-b-2 border-r-2" />
 
-      <figcaption className={`label-sm relative z-10 flex items-center justify-between gap-3 px-10 pt-[18px] max-sm:px-8 ${skin.text}`}>
+      <figcaption className="label-sm relative z-10 flex items-center justify-between gap-3 px-10 pt-[18px] text-muted max-sm:px-8">
         <span>{exhibit.figure}</span>
         <span className="inline-flex items-center gap-2">
           <RotateIcon />
@@ -129,7 +106,7 @@ const JsExhibit = ({ material, onLive }: Props) => {
       <div className="relative flex flex-auto items-center justify-center px-[8%]">
         <span
           aria-hidden="true"
-          className={`absolute top-[66%] left-1/2 aspect-[4/1] w-[62%] -translate-x-1/2 -translate-y-1/2 rounded-[50%] border border-dashed ${skin.ring}`}
+          className="absolute top-[66%] left-1/2 aspect-[4/1] w-[62%] -translate-x-1/2 -translate-y-1/2 rounded-[50%] border border-dashed border-plate-rule"
         />
         <img
           src={asset(exhibit.poster.src)}
@@ -138,7 +115,7 @@ const JsExhibit = ({ material, onLive }: Props) => {
           height={exhibit.poster.height}
           decoding="async"
           fetchPriority="low"
-          className={`relative block h-auto w-full max-w-[520px] transition-opacity duration-300 ${live ? 'opacity-0' : 'opacity-100'}`}
+          className={`absolute inset-0 block size-full object-contain transition-opacity duration-300 ${live ? 'opacity-0' : 'opacity-100'}`}
         />
         <div
           ref={stageRef}
@@ -146,7 +123,7 @@ const JsExhibit = ({ material, onLive }: Props) => {
         />
       </div>
 
-      <p className={`relative z-10 m-0 self-end px-10 pb-[22px] text-right font-mono text-[11px] leading-[1.5] max-sm:px-8 ${skin.text}`}>
+      <p className="relative z-10 m-0 self-end px-10 pb-[22px] text-right font-mono text-[11px] leading-[1.5] text-muted max-sm:px-8">
         {exhibit.credit[0]}<br />{exhibit.credit[1]}
       </p>
     </figure>

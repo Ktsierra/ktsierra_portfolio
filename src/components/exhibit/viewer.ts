@@ -26,12 +26,9 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 
-export type ExhibitMaterial = 'paper' | 'graphite' | 'signal';
-
 export interface ViewerOptions {
   container: HTMLElement;
   modelUrl: string;
-  material: ExhibitMaterial;
   reducedMotion: boolean;
   /** Allow software rendering (SwiftShader, llvmpipe). Off by default: those devices keep the poster. */
   allowSoftware: boolean;
@@ -42,15 +39,11 @@ export interface ViewerOptions {
 
 export interface Viewer {
   setActive: (active: boolean) => void;
-  setMaterial: (material: ExhibitMaterial) => void;
   dispose: () => void;
 }
 
-const MATERIALS: Record<ExhibitMaterial, { color: string; roughness: number }> = {
-  paper: { color: '#E9ECE8', roughness: 0.55 },
-  graphite: { color: '#2A2F36', roughness: 0.45 },
-  signal: { color: '#FF5A1F', roughness: 0.5 },
-};
+// Graphite (chosen over paper and signal): ink-2 with the orange rim light picking out the edges
+const GRAPHITE = { color: '#2A2F36', roughness: 0.45 };
 
 const REST_YAW = MathUtils.degToRad(-24);
 const REST_PITCH = MathUtils.degToRad(10);
@@ -123,8 +116,7 @@ export const createViewer = (opts: ViewerOptions): Viewer => {
   let clock = 0;
   let disposed = false;
   let radius = 0;
-  let current = opts.material;
-  const material = new MeshStandardMaterial({ metalness: 0, side: DoubleSide });
+  const material = new MeshStandardMaterial({ ...GRAPHITE, metalness: 0, side: DoubleSide });
 
   const frameModel = () => {
     if (!radius) return;
@@ -233,8 +225,6 @@ export const createViewer = (opts: ViewerOptions): Viewer => {
     (gltf) => {
       if (disposed) return;
       const model = gltf.scene;
-      material.color.set(MATERIALS[current].color);
-      material.roughness = MATERIALS[current].roughness;
       model.traverse((o: Object3D) => {
         // The export carries the curve outline as a line primitive: hide it, keep the solid
         if ('isLine' in o || 'isLineSegments' in o || 'isPoints' in o) o.visible = false;
@@ -270,15 +260,6 @@ export const createViewer = (opts: ViewerOptions): Viewer => {
   );
 
   return {
-    setMaterial: (next) => {
-      current = next;
-      material.color.set(MATERIALS[next].color);
-      material.roughness = MATERIALS[next].roughness;
-      if (frame) return;
-      // Redraw once even when the loop is asleep (reduced motion, settled)
-      last = 0;
-      frame = requestAnimationFrame(tick);
-    },
     setActive: (next) => {
       active = next;
       if (active) wake();

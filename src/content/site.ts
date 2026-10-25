@@ -95,26 +95,14 @@ export const site = {
     ] satisfies PlateRow[],
   },
 
-  /** Branch B: the hero's 3D exhibit. The plate becomes its inspection tag with five rows. */
+  /** The hero's 3D exhibit (graphite). The plate becomes its inspection tag with five rows. */
   exhibit: {
     ariaLabel: 'Interactive 3D model of Jose’s hand-made JS logo. Drag to rotate.',
     figure: 'Fig. 0 · <JS/>',
     hint: 'Drag to rotate',
     credit: ['Modeled by hand in Blender', 'Rendered live in Three.js'],
     model: 'exhibit/js.glb',
-    poster: { src: 'exhibit/poster.webp', width: 1296, height: 696 },
-    /** Q22: 'paper' (default), 'graphite' or 'signal'. The poster is rendered in paper. */
-    material: 'paper' as 'paper' | 'graphite' | 'signal',
-    /** Temporary, until the owner picks one (Q22): switches the live model between the three looks */
-    materialPicker: {
-      visible: true,
-      label: 'Material preview',
-      options: [
-        { id: 'paper', label: 'Paper' },
-        { id: 'graphite', label: 'Graphite' },
-        { id: 'signal', label: 'Signal' },
-      ] as const,
-    },
+    poster: { src: 'exhibit/poster.webp', width: 1048, height: 656 },
     plateRows: [
       { label: 'Name', value: 'Jose Sierra', strong: true },
       { label: 'Role', value: 'Full-stack, cloud, network & DevOps engineer' },

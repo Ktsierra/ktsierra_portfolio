@@ -34,10 +34,10 @@ The hero's right column is a live three.js render of the hand-made Blender logo,
   npx @gltf-transform/cli prune models/logo/scene.gltf /tmp/pruned.glb --keep-attributes false
   npx @gltf-transform/cli meshopt /tmp/pruned.glb public/exhibit/js.glb
   ```
-- **Poster:** `public/exhibit/poster.webp`. It renders immediately in the same box. The viewer chunk (`src/components/exhibit/viewer.ts`, ~166 KB gz) loads with a dynamic import once the page is idle and the figure is on screen, then crossfades in on its first frame.
+- **Poster:** `public/exhibit/poster.webp`, a capture of the live stage at the resting pose, so it lines up with the canvas. It renders immediately in the same box. The viewer chunk (`src/components/exhibit/viewer.ts`, ~166 KB gz) loads with a dynamic import once the page is idle and the figure is on screen, then crossfades in on its first frame.
 - **Fallbacks:** without WebGL, or with only a software renderer (SwiftShader, llvmpipe), the poster stays. Add `?force3d` to the URL to render anyway.
 - **Behavior:** the model idles within ±35° of the resting pose. Dragging rotates it, and touch uses `pan-y` so vertical scrolling still works. It eases back to the idle motion 3 s after release. Rendering pauses offscreen and in hidden tabs. With `prefers-reduced-motion` the model holds the resting pose and only moves on drag.
-- **Material:** `site.exhibit.material` takes `paper`, `graphite` or `signal`.
+- **Material:** graphite (`#2A2F36`, roughness 0.45) on the light panel viewport. Paper and signal were tried and dropped.
 
 ## Editing content
 
