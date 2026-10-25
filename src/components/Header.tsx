@@ -85,7 +85,8 @@ const Header = ({ backLabel, pageLabel }: Props) => {
               aria-controls={panelId}
               onClick={() => { setOpen((v) => !v); }}
             >
-              {open ? <CloseIcon /> : <MenuIcon />}
+              {/* The icon drops on the narrowest phones so the name and tagline keep one line */}
+              <span className="max-[379px]:hidden">{open ? <CloseIcon /> : <MenuIcon />}</span>
               {open ? header.closeLabel : header.menuLabel}
             </button>
           </>

@@ -2,22 +2,12 @@
  * All copy, links and data for the site live here (and in the case-study files).
  * Components never hard-code text.
  *
- * TODO: open placeholders. Each one renders as written until it is filled in.
- * Numbers refer to QUESTIONS.md in the redesign handoff.
+ * TODO: open items (numbers refer to QUESTIONS.md in the redesign handoff).
  *
- *   [EMAIL]            Q1   email shown in the hero CTA, contact band and case study
- *   [LINKEDIN_URL]     Q2   LinkedIn profile URL
- *   [RESUME_PDF_URL]   Q3   résumé PDF (drop it in public/ and point this at it)
- *   [CREDLY_URL]       Q4   AWS Certified Cloud Practitioner verification link
- *   [UNIVERSITY]       Q5   university for the B.S.
- *   [GRAD_YEAR]        Q5   graduation year
- *   [YEAR]             Q6   year NovaEdge Tech Corp started
- *   SkyVault start     Q7   case study timeline says 2025 (unconfirmed)
- *   [DATE]             Q8   SkyVault launch line ("launching [DATE]")
- *   novaedge link      Q9   whether novaedgetechnology.com runs the new galaxy site yet
- *   case study         Q10 to Q15  see src/content/skyvault.ts
- *   media              Q16, Q17    SkyVault screenshot, NovaEdge capture loop
- *   public content     Q19 to Q21  Systems detail, avionics card, testimonial
+ *   case study         Q10 to Q15  problem, decisions, "what's next": see src/content/skyvault.ts
+ *   media              Q16         SkyVault screenshot (after the getskyvault.app landing page ships)
+ *                      Q17         NovaEdge capture loop
+ *   résumé             Q3          public/Jose-Sierra-Resume.pdf may need updating
  */
 
 import type {
@@ -34,10 +24,10 @@ import type {
   ToolkitGroup,
 } from './types';
 
-const EMAIL = '[EMAIL]';
-const LINKEDIN_URL = '[LINKEDIN_URL]';
-const RESUME_PDF_URL = '[RESUME_PDF_URL]';
-const CREDLY_URL = '[CREDLY_URL]';
+const EMAIL = 'jose.sierra@novaedgetechnology.com';
+const LINKEDIN_URL = 'https://www.linkedin.com/in/jose-javier-sierra-delgado-5a8249246/';
+const RESUME_PDF_URL = `${import.meta.env.BASE_URL}Jose-Sierra-Resume.pdf`;
+const CREDLY_URL = 'https://www.credly.com/badges/88872f87-eb31-42ce-87cb-f0d46b991463';
 const GITHUB_URL = 'https://github.com/Ktsierra';
 const OSS_PR_URL = 'https://github.com/aws-amplify/amplify-data/pull/671';
 
@@ -45,9 +35,9 @@ export const site = {
   owner: 'Jose Sierra',
   base: 'South Florida',
   url: 'https://ktsierra.github.io/ktsierra_portfolio/',
-  title: 'Jose Sierra | Software Engineer (Full-stack, Cloud, DevOps)',
+  title: 'Jose Sierra | Software Engineer (Full-stack, Cloud, Network, DevOps)',
   description:
-    'Full-stack and cloud engineer in South Florida. I design multi-tenant AWS backends, ship React and React Native front ends, and run the production infrastructure of a 100-person aviation maintenance company.',
+    'Full-stack and cloud engineer in South Florida. I design multi-tenant AWS backends, ship React and React Native front ends, and run the network and production infrastructure of a 100-person aviation maintenance company.',
 
   links: {
     email: EMAIL,
@@ -61,12 +51,12 @@ export const site = {
 
   status: {
     visible: true,
-    label: 'Open to DevOps, SRE & software roles',
+    label: 'Open to software, cloud, network & DevOps roles',
   },
 
   header: {
     mark: 'JS',
-    tagline: 'Software · Cloud · Infra',
+    tagline: 'Software · Cloud · Network',
     nav: [
       { label: 'Work', href: '#work' },
       { label: 'Systems', href: '#systems' },
@@ -98,7 +88,7 @@ export const site = {
     serial: 'S/N KTSIERRA · Rev 2026',
     rows: [
       { label: 'Name', value: 'Jose Sierra', strong: true },
-      { label: 'Role', value: 'Full-stack, cloud & DevOps engineer' },
+      { label: 'Role', value: 'Full-stack, cloud, network & DevOps engineer' },
       { label: 'Stack', value: 'TypeScript · React / React Native · AWS serverless' },
       { label: 'Base', value: 'South Florida · remote, on-site or relocation' },
       { label: 'Cert', value: 'AWS Certified Cloud Practitioner' },
@@ -168,28 +158,33 @@ export const site = {
       ],
       stack: ['Amplify Gen 2', 'AppSync', 'Cognito', 'Lambda', 'DynamoDB', 'TanStack Start', 'Expo', 'Sentry', 'PostHog'],
       cta: { label: 'Read the case study', href: '/work/skyvault' },
-      note: 'getskyvault.app · launching [DATE]',
+      note: 'getskyvault.app · pre-launch',
       diagram: {
         figure: 'Fig. 1 · Architecture',
         meta: 'Simplified',
         ariaLabel:
-          'SkyVault architecture diagram: web and mobile clients call AWS AppSync, authenticated by Cognito with a pre-token Lambda; Lambda resolvers check permissions and write to DynamoDB and S3; Sentry and PostHog observe every environment',
+          'SkyVault architecture diagram: web, mobile and public share-link clients call AWS AppSync, authenticated by Cognito with four Lambda triggers; Lambda resolvers check permissions and write to DynamoDB and S3; a scheduled cleanup job and email telemetry run in the background; Sentry and PostHog observe every environment',
         tiers: [
           [
             { kind: 'Client', title: 'Web · TanStack Start' },
             { kind: 'Client', title: 'iOS + Android · Expo' },
+            { kind: 'Public', title: 'Share links · email OTP' },
           ],
           [
             { kind: 'API', title: 'AWS AppSync', tone: 'primary' },
-            { kind: 'Auth', title: 'Cognito + pre-token λ', tone: 'highlight' },
+            { kind: 'Auth', title: 'Cognito + 4 λ triggers', tone: 'highlight' },
           ],
           { kind: 'Compute', title: 'Lambda resolvers · permission checks' },
           [
             { kind: 'Data', title: 'DynamoDB' },
             { kind: 'Files', title: 'S3 · presigned exports' },
           ],
+          [
+            { kind: 'Scheduled', title: 'EventBridge · daily cleanup' },
+            { kind: 'Telemetry', title: 'SES → SNS → PostHog' },
+          ],
         ],
-        connectors: ['GraphQL ↓ · subscriptions ↑', 'mutations + JWT claims', null],
+        connectors: ['GraphQL ↓ · subscriptions ↑', 'mutations + JWT claims', null, 'background jobs'],
         peerTiers: [1],
         footer: { label: 'Observability', value: 'Sentry · PostHog · per environment' },
       },
@@ -284,7 +279,7 @@ export const site = {
         ],
       },
       {
-        dates: '[YEAR] → Now',
+        dates: '2025 → Now',
         role: 'Founder & Engineer',
         org: 'NovaEdge Tech Corp · Florida',
         points: ['One-person software company. Building SkyVault, a multi-tenant SaaS for aviation MRO, end to end.'],
@@ -311,7 +306,7 @@ export const site = {
     education: {
       label: 'Education',
       title: 'B.S. Telecommunications & Electronics Engineering',
-      detail: '[UNIVERSITY] · [GRAD_YEAR]',
+      detail: 'Technological University of Havana (CUJAE) · 2022',
     },
     certification: {
       label: 'Certification',
@@ -335,7 +330,7 @@ export const site = {
     title: 'Engineer by training, builder by habit.',
     paragraphs: [
       'I started in telecom, pulling fiber and lighting up cell sites, and in research, writing Python for gait-analysis models. Today I write TypeScript across the stack and run the infrastructure of an aviation maintenance company, so the code I ship gets used on a shop floor the next morning.',
-      'I’m looking for a software team (DevOps, SRE or product engineering) where owning both the code and how it runs is the job, not a side quest.',
+      'I’m looking for a software team (product, cloud, network or DevOps engineering) where owning both the code and how it runs is the job, not a side quest.',
     ],
     testimonial: {
       quote:
