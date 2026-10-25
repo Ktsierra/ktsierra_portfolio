@@ -48,6 +48,9 @@ jobs:
         run: npm run build
         env:
           VITE_BASE: /ktsierra_portfolio/preview/${{ steps.slot.outputs.name }}/
+          VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
+          VITE_EMAILJS_SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID }}
+          VITE_EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}
 
       - name: Deploy to gh-pages/preview/${{ steps.slot.outputs.name }}
         uses: JamesIves/github-pages-deploy-action@v4

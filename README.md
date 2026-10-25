@@ -48,6 +48,7 @@ All text lives in `src/content/`. Components never hard-code copy.
 - **To add a case study,** create `src/content/<slug>.ts` that exports a `CaseStudy` (copy `skyvault.ts`), then add it to `src/content/caseStudies.ts`. The case study is served at `/work/<slug>`.
 - **Decision records** (`decisions.items`): one area label and one statement each. The section hides itself while the list is empty.
 - **The NovaEdge loop** (`work.cards[0].media`): `public/work/novaedge-loop.{mp4,webm}` plus a poster, a 7.5 s twilight capture of the galaxy-v2 site. Keep the video under ~1.5 MB. Without media a labelled placeholder renders.
+- **Contact form:** it sends through EmailJS, using the same template parameters as the old form. It renders only when `VITE_EMAILJS_PUBLIC_KEY`, `VITE_EMAILJS_SERVICE_ID` and `VITE_EMAILJS_TEMPLATE_ID` are set at build time; the workflows read them from repo secrets. Without them the email button still works.
 - **Copy style:** no em dashes or en dashes. Use a period, colon, comma or ` · `. Date ranges use an arrow: `2023 → Now`.
 
 ## Develop

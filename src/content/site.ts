@@ -348,6 +348,17 @@ export const site = {
       { label: 'GitHub ↗', href: GITHUB_URL },
       { label: 'Résumé (PDF) ↓', href: RESUME_PDF_URL },
     ] satisfies Link[],
+    /** Sent through EmailJS; shown next to the email button when the keys are configured */
+    form: {
+      title: 'Or send a message',
+      name: 'Name',
+      email: 'Email',
+      message: 'Message',
+      submit: 'Send message',
+      sending: 'Sending…',
+      sent: 'Thanks, message sent. I’ll reply by email.',
+      error: `Couldn’t send it. Email me at ${EMAIL} instead.`,
+    },
   },
 
   footer: {

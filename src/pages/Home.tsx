@@ -5,6 +5,8 @@ import Hero from '../components/Hero';
 import ProjectCard from '../components/ProjectCard';
 import ProjectFeatured from '../components/ProjectFeatured';
 import ProjectRow from '../components/ProjectRow';
+import ContactForm from '../components/ContactForm';
+import { emailjsEnabled } from '../lib/emailjs';
 import Reveal from '../components/Reveal';
 import SectionHeader from '../components/SectionHeader';
 import { ArrowRight } from '../components/icons';
@@ -182,17 +184,26 @@ const Contact = () => {
         <h2 id="contact-title" className="m-0 max-w-[11em] text-[clamp(44px,7.6vw,116px)] leading-[0.96] font-extrabold tracking-[-0.03em] text-balance [font-stretch:118%]">
           {contact.title}
         </h2>
-        <a
-          href={links.mailto}
-          className="inline-flex min-h-16 max-w-full items-center gap-3.5 self-start bg-ink px-7 text-[clamp(18px,2vw,24px)] font-semibold [overflow-wrap:anywhere] text-paper no-underline transition-colors duration-150 hover:bg-paper hover:text-ink"
-        >
-          {links.email}
-          <ArrowRight size={22} />
-        </a>
-        <div className="flex flex-wrap gap-x-8 gap-y-1 font-mono text-sm">
-          {contact.links.map((l) => (
-            <a key={l.label} href={l.href} className="link link-on-signal inline-flex min-h-11 items-center">{l.label}</a>
-          ))}
+        {/* Email button and links on the left; the form, when configured, beside them on wide screens */}
+        <div className="grid items-start gap-x-16 gap-y-12 min-[1000px]:grid-cols-[minmax(0,1fr)_minmax(0,520px)]">
+          <div className="flex min-w-0 flex-col items-start gap-10">
+            <a
+              href={links.mailto}
+              className="inline-flex min-h-16 max-w-full items-center gap-3.5 bg-ink px-7 py-3 text-[clamp(16px,4.2vw,24px)] font-semibold [overflow-wrap:anywhere] text-paper no-underline transition-colors duration-150 hover:bg-paper hover:text-ink max-sm:px-5"
+            >
+              {/* A long address breaks after the @ on narrow phones, not mid-domain */}
+              <span>
+                {links.email.split('@')[0]}@<wbr />{links.email.split('@')[1]}
+              </span>
+              <ArrowRight size={22} />
+            </a>
+            <div className="flex flex-wrap gap-x-8 gap-y-1 font-mono text-sm">
+              {contact.links.map((l) => (
+                <a key={l.label} href={l.href} className="link link-on-signal inline-flex min-h-11 items-center">{l.label}</a>
+              ))}
+            </div>
+          </div>
+          {emailjsEnabled && <ContactForm />}
         </div>
       </Reveal>
     </section>
