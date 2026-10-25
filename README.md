@@ -47,7 +47,7 @@ All text lives in `src/content/`. Components never hard-code copy.
 - The "Open to roles" badge is `site.status.visible`.
 - **To add a case study,** create `src/content/<slug>.ts` that exports a `CaseStudy` (copy `skyvault.ts`), then add it to `src/content/caseStudies.ts`. The case study is served at `/work/<slug>`.
 - **Decision records** (`decisions.items`): one area label and one statement each. The section hides itself while the list is empty.
-- **The NovaEdge loop** (`work.cards[0].media`): `public/work/novaedge-loop.{mp4,webm}` plus a poster, a 7.5 s capture of the galaxy-v2 site. Keep the video under ~1.5 MB. Without media a labelled placeholder renders.
+- **The NovaEdge loop** (`work.cards[0].media`): `public/work/novaedge-loop.{mp4,webm}` plus a poster, a 7.5 s twilight capture of the galaxy-v2 site. Keep the video under ~1.5 MB. Without media a labelled placeholder renders.
 - **Copy style:** no em dashes or en dashes. Use a period, colon, comma or ` · `. Date ranges use an arrow: `2023 → Now`.
 
 ## Develop
