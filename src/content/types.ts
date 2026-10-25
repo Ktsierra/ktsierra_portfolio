@@ -122,11 +122,10 @@ export interface Testimonial {
   title: string;
 }
 
+/** A one-line decision record: an area label and a plain statement */
 export interface CaseStudyDecision {
   area: string;
-  title: string;
-  why: string;
-  cost: string;
+  statement: string;
 }
 
 export interface CaseStudy {

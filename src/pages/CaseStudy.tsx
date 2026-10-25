@@ -112,11 +112,9 @@ const CaseStudy = () => {
             </Reveal>
             <ol className="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(min(360px,100%),1fr))] gap-px border-[1.5px] border-ink bg-ink p-0">
               {cs.decisions.items.map((d, i) => (
-                <li key={d.title} className="flex flex-col gap-3 bg-paper p-7">
+                <li key={d.area} className="flex flex-col gap-3 bg-paper p-7">
                   <span className="label-sm text-signal-ink">DR-{n(i + 1)} · {d.area}</span>
-                  <h3 className="m-0 text-[22px] leading-[1.2] font-bold [font-stretch:110%]">{d.title}</h3>
-                  <p className="m-0 text-base leading-[1.6] text-ink-2">{d.why}</p>
-                  <p className="m-0 font-mono text-xs leading-[1.6] text-muted">Cost: {d.cost}</p>
+                  <h3 className="m-0 text-[20px] leading-[1.3] font-bold text-pretty [font-stretch:110%]">{d.statement}</h3>
                 </li>
               ))}
             </ol>
