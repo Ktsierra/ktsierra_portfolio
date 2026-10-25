@@ -107,9 +107,19 @@ export const site = {
     poster: { src: 'exhibit/poster.webp', width: 1296, height: 696 },
     /** Q22: 'paper' (default), 'graphite' or 'signal'. The poster is rendered in paper. */
     material: 'paper' as 'paper' | 'graphite' | 'signal',
+    /** Temporary, until the owner picks one (Q22): switches the live model between the three looks */
+    materialPicker: {
+      visible: true,
+      label: 'Material preview',
+      options: [
+        { id: 'paper', label: 'Paper' },
+        { id: 'graphite', label: 'Graphite' },
+        { id: 'signal', label: 'Signal' },
+      ] as const,
+    },
     plateRows: [
       { label: 'Name', value: 'Jose Sierra', strong: true },
-      { label: 'Role', value: 'Full-stack, cloud & DevOps engineer' },
+      { label: 'Role', value: 'Full-stack, cloud, network & DevOps engineer' },
       { label: 'Base', value: 'South Florida · remote or relocation' },
       { label: 'Cert', value: 'AWS Certified Cloud Practitioner' },
       { label: 'OSS', value: 'amplify-data #671', href: OSS_PR_URL, suffix: ' · merged' },

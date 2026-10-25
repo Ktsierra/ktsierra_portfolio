@@ -42,6 +42,7 @@ export interface ViewerOptions {
 
 export interface Viewer {
   setActive: (active: boolean) => void;
+  setMaterial: (material: ExhibitMaterial) => void;
   dispose: () => void;
 }
 
@@ -122,6 +123,8 @@ export const createViewer = (opts: ViewerOptions): Viewer => {
   let clock = 0;
   let disposed = false;
   let radius = 0;
+  let current = opts.material;
+  const material = new MeshStandardMaterial({ metalness: 0, side: DoubleSide });
 
   const frameModel = () => {
     if (!radius) return;
@@ -230,8 +233,8 @@ export const createViewer = (opts: ViewerOptions): Viewer => {
     (gltf) => {
       if (disposed) return;
       const model = gltf.scene;
-      const { color, roughness } = MATERIALS[opts.material];
-      const material = new MeshStandardMaterial({ color, roughness, metalness: 0, side: DoubleSide });
+      material.color.set(MATERIALS[current].color);
+      material.roughness = MATERIALS[current].roughness;
       model.traverse((o: Object3D) => {
         // The export carries the curve outline as a line primitive: hide it, keep the solid
         if ('isLine' in o || 'isLineSegments' in o || 'isPoints' in o) o.visible = false;
@@ -267,6 +270,15 @@ export const createViewer = (opts: ViewerOptions): Viewer => {
   );
 
   return {
+    setMaterial: (next) => {
+      current = next;
+      material.color.set(MATERIALS[next].color);
+      material.roughness = MATERIALS[next].roughness;
+      if (frame) return;
+      // Redraw once even when the loop is asleep (reduced motion, settled)
+      last = 0;
+      frame = requestAnimationFrame(tick);
+    },
     setActive: (next) => {
       active = next;
       if (active) wake();
