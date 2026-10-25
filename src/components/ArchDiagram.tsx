@@ -76,7 +76,15 @@ const ArchDiagram = ({ data, size = 'compact', className = '' }: Props) => {
           );
         } else {
           row = (
-            <div className={large ? 'grid grid-cols-[repeat(auto-fit,minmax(min(240px,100%),1fr))] gap-4' : 'grid grid-cols-2 gap-3'}>
+            <div
+              className={
+                large
+                  ? 'grid grid-cols-[repeat(auto-fit,minmax(min(240px,100%),1fr))] gap-4'
+                  : nodes.length === 2
+                    ? 'grid grid-cols-2 gap-3'
+                    : 'grid grid-cols-[repeat(auto-fit,minmax(min(140px,100%),1fr))] gap-3'
+              }
+            >
               {nodes.map((n) => <Node key={n.title} node={n} large={large} />)}
             </div>
           );
