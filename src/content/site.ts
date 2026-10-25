@@ -4,7 +4,6 @@
  *
  * TODO: open items (numbers refer to QUESTIONS.md in the redesign handoff).
  *
- *   case study         Q10 to Q15  problem, decisions, "what's next": see src/content/skyvault.ts
  *   media              Q16         SkyVault screenshot (after the getskyvault.app landing page ships)
  *                      Q17         NovaEdge capture loop
  *   résumé             Q3          public/Jose-Sierra-Resume.pdf may need updating
@@ -122,7 +121,7 @@ export const site = {
         {
           id: '1.1',
           title: 'Permissions in the token.',
-          body: 'A Cognito pre-token-generation (v2) Lambda injects permission IDs into access tokens; Lambda resolvers enforce them on every mutation.',
+          body: 'A Cognito pre-token-generation (v2) Lambda injects permission IDs into access tokens; Lambda resolvers enforce them on every business operation.',
         },
         {
           id: '1.2',
@@ -251,7 +250,7 @@ export const site = {
     items: [
       {
         dates: '2023 → Now',
-        role: 'IT Manager',
+        role: 'IT Manager & Developer',
         org: 'JJA Aviation · South Florida',
         points: [
           'Own identity, endpoints, network, voice and monitoring for ~100 staff across shop floor and office.',
@@ -267,7 +266,7 @@ export const site = {
       },
       {
         dates: '2022 → 2023',
-        role: 'Telecom Engineer',
+        role: 'Telematics Specialist',
         org: 'ETECSA · Matanzas, Cuba',
         points: [
           'Led a 10-person team on optical fiber distribution and installation.',

@@ -1,12 +1,7 @@
 /*
  * SkyVault case study.
  *
- * TODO (QUESTIONS.md section B and C):
- *   problem        Q10, Q11  drafted from the owner's answers; needs his OK on the wording
- *   decisions      Q12       only owner-confirmed records go in `decisions.items`;
- *                            the section is hidden while the list is empty
- *   running        Q14       the Testing row is drafted from the repo; needs his OK
- *   next           Q15       placeholder text below
+ * TODO (QUESTIONS.md section C):
  *   screenshot     Q16       set `screenshot` once the getskyvault.app landing page ships
  */
 
@@ -63,7 +58,7 @@ export const skyvault: CaseStudy = {
             tone: 'highlight',
           },
         ],
-        { kind: 'Compute', title: 'Lambda resolvers', note: 'Permission check on every mutation' },
+        { kind: 'Compute', title: 'Lambda resolvers', note: 'Permission check on every business operation' },
         [
           { kind: 'Data', title: 'DynamoDB' },
           { kind: 'Files', title: 'S3', note: 'Bulk exports via presigned URLs' },
@@ -78,8 +73,15 @@ export const skyvault: CaseStudy = {
     },
   },
   decisions: {
-    intro: 'Short decision records: what I chose, and what it cost.',
-    items: [],
+    intro: 'The calls that shape the system.',
+    items: [
+      { area: 'Auth', statement: 'Permissions travel in the access token, so AppSync enforces row access natively.' },
+      { area: 'Tenancy', statement: 'Each user’s tenant is fixed when the account is created and can never change.' },
+      { area: 'Writes', statement: 'Every business write goes through a Lambda that checks permissions. No client can delete.' },
+      { area: 'Realtime', statement: 'One custom change channel replaces the generated model subscriptions.' },
+      { area: 'Storage', statement: 'Files move only through short-lived presigned URLs, never direct S3 access.' },
+      { area: 'Compliance', statement: 'Deletes are soft, and an immutable audit log records every admin action.' },
+    ],
   },
   running: [
     {
@@ -90,7 +92,7 @@ export const skyvault: CaseStudy = {
     { label: 'Sharing', body: 'Restricted media share links, unlocked with a one-time password sent by email.' },
     { label: 'Compliance', body: 'In-app account deletion built to App Store and Google Play requirements.' },
   ],
-  next: ['[Launch milestone and date, first customers or pilot, the next technical problem you’re working on.]'],
+  next: ['Launching getskyvault.app.'],
   navBand: {
     back: 'Back to all work',
     cta: 'Want the deep dive? Let’s talk ↗',
