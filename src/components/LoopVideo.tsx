@@ -50,7 +50,8 @@ const LoopVideo = ({ media }: { media: MediaLoop }) => {
         loop
         playsInline
         preload="none"
-        poster={media.poster}
+        // The poster is a full frame; hold it back until the card is near so it doesn't load with the page
+        poster={inView ? media.poster : undefined}
         width={media.width}
         height={media.height}
         aria-hidden="true"
