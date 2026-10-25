@@ -1,13 +1,13 @@
 name: Deploy branch preview
 
-# Each redesign branch publishes into its own folder on gh-pages:
-#   redesign/a-plate   → https://ktsierra.github.io/ktsierra_portfolio/preview/a/
+# The redesign branch publishes into its own folder on gh-pages:
 #   redesign/b-exhibit → https://ktsierra.github.io/ktsierra_portfolio/preview/b/
 # The live site at the root is never touched.
+# (Variant A, redesign/a-plate, was retired once B was picked; its commits are in B's history.)
 
 on:
   push:
-    branches: [redesign/a-plate, redesign/b-exhibit]
+    branches: [redesign/b-exhibit]
   workflow_dispatch:
 
 # One gh-pages writer at a time, so two branch pushes don't race
@@ -25,7 +25,6 @@ jobs:
         id: slot
         run: |
           case "${GITHUB_REF_NAME}" in
-            redesign/a-plate) echo "name=a" >> "$GITHUB_OUTPUT" ;;
             redesign/b-exhibit) echo "name=b" >> "$GITHUB_OUTPUT" ;;
             *) echo "Unknown branch ${GITHUB_REF_NAME}"; exit 1 ;;
           esac

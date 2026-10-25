@@ -24,7 +24,7 @@ scripts/
   og.html, render-static.mjs   source and renderer for public/og.png and the favicon PNGs
 ```
 
-## The <JS/> exhibit (branch `redesign/b-exhibit`)
+## The <JS/> exhibit
 
 The hero's right column is a live three.js render of the hand-made Blender logo, with the ident plate hanging off it like an inspection tag.
 
@@ -68,15 +68,11 @@ Vite's `base` comes from `VITE_BASE` and defaults to `/ktsierra_portfolio/`.
 
 ### Branch previews
 
-Pushing to `redesign/a-plate` or `redesign/b-exhibit` runs `.github/workflows/preview.yaml`, which publishes the branch into its own folder on `gh-pages`. The live root is never touched:
+Pushing to `redesign/b-exhibit` runs `.github/workflows/preview.yaml`, which publishes the branch to <https://ktsierra.github.io/ktsierra_portfolio/preview/b/> on `gh-pages`. The live root is never touched.
 
-- A: <https://ktsierra.github.io/ktsierra_portfolio/preview/a/>
-- B: <https://ktsierra.github.io/ktsierra_portfolio/preview/b/>
-
-To publish one by hand instead:
+To publish by hand instead:
 
 ```sh
-VITE_BASE=/ktsierra_portfolio/preview/a/ npm run build && npx gh-pages -d dist --dest preview/a --add
 VITE_BASE=/ktsierra_portfolio/preview/b/ npm run build && npx gh-pages -d dist --dest preview/b --add
 ```
 
