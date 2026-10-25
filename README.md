@@ -53,7 +53,12 @@ Vite's `base` comes from `VITE_BASE` and defaults to `/ktsierra_portfolio/`.
 
 ### Branch previews
 
-Each redesign branch can be published into a subfolder of `gh-pages`, leaving the live root untouched:
+Pushing to `redesign/a-plate` or `redesign/b-exhibit` runs `.github/workflows/preview.yaml`, which publishes the branch into its own folder on `gh-pages`. The live root is never touched:
+
+- A: <https://ktsierra.github.io/ktsierra_portfolio/preview/a/>
+- B: <https://ktsierra.github.io/ktsierra_portfolio/preview/b/>
+
+To publish one by hand instead:
 
 ```sh
 VITE_BASE=/ktsierra_portfolio/preview/a/ npm run build && npx gh-pages -d dist --dest preview/a --add
