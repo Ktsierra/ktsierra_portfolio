@@ -5,7 +5,6 @@
  * TODO: open items (numbers refer to QUESTIONS.md in the redesign handoff).
  *
  *   media              Q16         SkyVault screenshot (after the getskyvault.app landing page ships)
- *                      Q17         NovaEdge capture loop
  *   résumé             Q3          public/Jose-Sierra-Resume.pdf may need updating
  */
 
@@ -207,6 +206,9 @@ export const site = {
         title: 'NovaEdge Technology site',
         body: 'A galaxy that flies down to wherever the visitor is. The globe shows real day and night, the moon sits where it actually is, and the sky over the city follows the visitor’s local time. Adaptive resolution and a weak-GPU fallback keep it smooth on phones.',
         media: {
+          poster: `${import.meta.env.BASE_URL}work/novaedge-poster.webp`,
+          mp4: `${import.meta.env.BASE_URL}work/novaedge-loop.mp4`,
+          webm: `${import.meta.env.BASE_URL}work/novaedge-loop.webm`,
           width: 1280,
           height: 720,
           placeholderTitle: '[NovaEdge capture]',
