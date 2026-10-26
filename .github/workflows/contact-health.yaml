@@ -1,0 +1,93 @@
+name: Contact form health check
+
+# EmailJS sends the contact form through a Gmail connection that Google can revoke without warning,
+# and its API can only send, so the only way to know the link is alive is to send something.
+# Once a day this sends one message through the SAME EmailJS service as the form, but with a separate
+# "health check" template addressed to a plus-address that a Gmail filter deletes on arrival.
+# Nothing reaches your inbox while it works. If EmailJS refuses the send, the run fails and opens an
+# issue (GitHub emails the repo owner); the next passing run closes it.
+#
+# One-time setup:
+#   1. EmailJS → Email Templates → new template "portfolio-health":
+#        To Email: <your gmail>+portfolio-health@gmail.com, Subject: [portfolio-health] daily check
+#      Add its ID as the repo secret EMAILJS_HEALTH_TEMPLATE_ID.
+#   2. Gmail → filter: deliveredto:<your gmail>+portfolio-health@gmail.com
+#        → Skip the Inbox, Mark as read, Delete it.
+#   3. EmailJS → Account → Security: allow "API access from non-browser environments".
+#      If "Use Private Key" is on, add that key as the repo secret EMAILJS_PRIVATE_KEY.
+#   4. Actions → "Contact form health check" → Run workflow, and check nothing lands in your inbox.
+#
+# Until EMAILJS_HEALTH_TEMPLATE_ID exists the job skips itself (no email, no issue).
+#
+# Scheduled runs only happen from the default branch, and GitHub pauses them after 60 days
+# without repo activity (re-enable from the Actions tab).
+
+on:
+  schedule:
+    - cron: '17 13 * * *' # daily, 13:17 UTC (09:17 in Miami during EDT)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+env:
+  ISSUE_TITLE: 'Contact form is down: EmailJS check failed'
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send a test message through EmailJS
+        env:
+          SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID }}
+          TEMPLATE_ID: ${{ secrets.EMAILJS_HEALTH_TEMPLATE_ID }}
+          PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
+          PRIVATE_KEY: ${{ secrets.EMAILJS_PRIVATE_KEY }}
+        run: |
+          if [ -z "$TEMPLATE_ID" ]; then
+            echo "::notice::EMAILJS_HEALTH_TEMPLATE_ID isn't set yet; skipping the check (see the setup notes at the top of this file)."
+            exit 0
+          fi
+          payload=$(jq -n \
+            --arg s "$SERVICE_ID" --arg t "$TEMPLATE_ID" --arg u "$PUBLIC_KEY" --arg k "$PRIVATE_KEY" \
+            --arg when "$(date -u '+%Y-%m-%d %H:%M UTC')" \
+            '{service_id: $s, template_id: $t, user_id: $u,
+              template_params: {
+                from_name: "Portfolio health check",
+                message: ("Automated daily check from GitHub Actions (" + $when + "). If this arrived, the contact form works.")
+              }} + (if $k == "" then {} else {accessToken: $k} end)')
+          code=$(curl -sS -o response.txt -w '%{http_code}' -X POST https://api.emailjs.com/api/v1.0/email/send \
+            -H 'Content-Type: application/json' -d "$payload")
+          echo "EmailJS answered HTTP $code: $(cat response.txt)"
+          [ "$code" = "200" ]
+
+      - name: Open an issue (once) when the check fails
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          open=$(gh issue list --state open --search "\"$ISSUE_TITLE\" in:title" --json number --jq '.[0].number')
+          if [ -n "$open" ]; then
+            gh issue comment "$open" --body "Still failing: $RUN_URL"
+          else
+            gh issue create --title "$ISSUE_TITLE" --body "The daily EmailJS check failed, so the portfolio contact form is probably not delivering messages.
+
+          Most likely the Gmail connection in EmailJS was revoked. Reconnect it in the EmailJS dashboard (Email Services → your Gmail service → Reconnect), then run this workflow again from the Actions tab.
+
+          Failed run: $RUN_URL
+
+          Visitors still see the email button, and a failed send offers them a prefilled email instead, so messages aren't lost."
+          fi
+
+      - name: Close the issue once the check passes again
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          for n in $(gh issue list --state open --search "\"$ISSUE_TITLE\" in:title" --json number --jq '.[].number'); do
+            gh issue close "$n" --comment "EmailJS check passes again."
+          done
