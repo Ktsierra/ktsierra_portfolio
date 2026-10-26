@@ -94,7 +94,9 @@ export const createViewer = (opts: ViewerOptions): Viewer => {
 
   const scene = new Scene();
   const pmrem = new PMREMGenerator(renderer);
-  const envMap = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+  const room = new RoomEnvironment();
+  const envMap = pmrem.fromScene(room, 0.04).texture;
+  room.dispose(); // its geometry and materials are only needed to bake the env map
   scene.environment = envMap;
   scene.environmentIntensity = 0.35;
 
@@ -287,6 +289,9 @@ export const createViewer = (opts: ViewerOptions): Viewer => {
       envMap.dispose();
       pmrem.dispose();
       renderer.dispose();
+      // Release the GL context now instead of when the canvas is collected: returning to the home
+      // page creates a fresh viewer, and browsers cap live WebGL contexts
+      renderer.forceContextLoss();
       canvas.remove();
     },
   };

@@ -79,9 +79,19 @@
     color: inherit;
   }
 
+  /* The outline is drawn on the ground around the element, so its colour follows the section:
+     signal-ink on paper/panel (3:1+), signal on the dark bands, ink on the orange band */
   :focus-visible {
-    outline: 2px solid var(--color-signal);
+    outline: 2px solid var(--color-signal-ink);
     outline-offset: 3px;
+  }
+
+  .bg-ink :focus-visible {
+    outline-color: var(--color-signal);
+  }
+
+  .bg-signal :focus-visible {
+    outline-color: var(--color-ink);
   }
 
   ::selection {

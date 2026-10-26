@@ -9,9 +9,10 @@ name: Contact form health check
 #
 # One-time setup:
 #   1. EmailJS → Email Templates → new template "portfolio-health":
-#        To Email: <your gmail>+portfolio-health@gmail.com, Subject: [portfolio-health] daily check
+#        To Email: you+portfolio-health@gmail.com (the tag goes before the @: name@gmail.com
+#        becomes name+portfolio-health@gmail.com), Subject: [portfolio-health] daily check
 #      Add its ID as the repo secret EMAILJS_HEALTH_TEMPLATE_ID.
-#   2. Gmail → filter: deliveredto:<your gmail>+portfolio-health@gmail.com
+#   2. Gmail → filter: to:(you+portfolio-health@gmail.com)
 #        → Skip the Inbox, Mark as read, Delete it.
 #   3. EmailJS → Account → Security: allow "API access from non-browser environments".
 #      If "Use Private Key" is on, add that key as the repo secret EMAILJS_PRIVATE_KEY.
@@ -29,7 +30,6 @@ on:
 
 permissions:
   contents: read
-  issues: write
 
 env:
   ISSUE_TITLE: 'Contact form is down: EmailJS check failed'
@@ -37,8 +37,12 @@ env:
 jobs:
   check:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write # open or close the "Contact form is down" issue
     steps:
       - name: Send a test message through EmailJS
+        id: send
         env:
           SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID }}
           TEMPLATE_ID: ${{ secrets.EMAILJS_HEALTH_TEMPLATE_ID }}
@@ -46,7 +50,8 @@ jobs:
           PRIVATE_KEY: ${{ secrets.EMAILJS_PRIVATE_KEY }}
         run: |
           if [ -z "$TEMPLATE_ID" ]; then
-            echo "::notice::EMAILJS_HEALTH_TEMPLATE_ID isn't set yet; skipping the check (see the setup notes at the top of this file)."
+            echo "::notice::EMAILJS_HEALTH_TEMPLATE_ID isn't set; skipping the check (see the setup notes at the top of this file)."
+            echo "result=skipped" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           payload=$(jq -n \
@@ -57,10 +62,14 @@ jobs:
                 from_name: "Portfolio health check",
                 message: ("Automated daily check from GitHub Actions (" + $when + "). If this arrived, the contact form works.")
               }} + (if $k == "" then {} else {accessToken: $k} end)')
-          code=$(curl -sS -o response.txt -w '%{http_code}' -X POST https://api.emailjs.com/api/v1.0/email/send \
-            -H 'Content-Type: application/json' -d "$payload")
-          echo "EmailJS answered HTTP $code: $(cat response.txt)"
+          rm -f response.txt
+          # Timeouts so a stalled connection fails the check instead of hanging the job
+          code=$(curl -sS --connect-timeout 10 --max-time 30 -o response.txt -w '%{http_code}' \
+            -X POST https://api.emailjs.com/api/v1.0/email/send \
+            -H 'Content-Type: application/json' -d "$payload") || code="000"
+          echo "EmailJS answered HTTP $code: $(cat response.txt 2>/dev/null)"
           [ "$code" = "200" ]
+          echo "result=sent" >> "$GITHUB_OUTPUT"
 
       - name: Open an issue (once) when the check fails
         if: failure()
@@ -83,7 +92,8 @@ jobs:
           fi
 
       - name: Close the issue once the check passes again
-        if: success()
+        # Only a confirmed send counts as recovery; a skipped check (no template secret) doesn't
+        if: success() && steps.send.outputs.result == 'sent'
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}

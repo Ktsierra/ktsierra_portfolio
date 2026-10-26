@@ -22,7 +22,10 @@ const ScrollManager = () => {
     let tries = 0;
     let frame = 0;
     const seek = () => {
-      const el = document.getElementById(decodeURIComponent(hash.slice(1)));
+      // A malformed escape (e.g. "/#%") must not throw and blank the page
+      let targetId = hash.slice(1);
+      try { targetId = decodeURIComponent(targetId); } catch { /* keep the raw id */ }
+      const el = document.getElementById(targetId);
       if (el) {
         el.scrollIntoView({ behavior });
         return;

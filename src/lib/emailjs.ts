@@ -11,6 +11,8 @@ export const sendEmail = async (params: Record<string, string>) => {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ service_id: SERVICE_ID, template_id: TEMPLATE_ID, user_id: PUBLIC_KEY, template_params: params }),
+    // A stalled request must still end, so the form can offer the mailto fallback
+    signal: AbortSignal.timeout(15000),
   });
   if (!res.ok) throw new Error(`EmailJS ${String(res.status)}`);
 };
