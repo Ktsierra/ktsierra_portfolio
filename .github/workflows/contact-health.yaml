@@ -78,13 +78,20 @@ jobs:
           GH_REPO: ${{ github.repository }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
+          # EmailJS's own answer from the check step tells a revoked Gmail link apart from a config problem
+          said=$(cat response.txt 2>/dev/null || true)
+          [ -n "$said" ] || said="no response (timeout or network error)"
           open=$(gh issue list --state open --search "\"$ISSUE_TITLE\" in:title" --json number --jq '.[0].number')
           if [ -n "$open" ]; then
-            gh issue comment "$open" --body "Still failing: $RUN_URL"
+            gh issue comment "$open" --body "Still failing: $RUN_URL
+
+          EmailJS said: \`$said\`"
           else
             gh issue create --title "$ISSUE_TITLE" --body "The daily EmailJS check failed, so the portfolio contact form is probably not delivering messages.
 
-          Most likely the Gmail connection in EmailJS was revoked. Reconnect it in the EmailJS dashboard (Email Services → your Gmail service → Reconnect), then run this workflow again from the Actions tab.
+          EmailJS said: \`$said\`
+
+          If that mentions Gmail or the service, the Gmail connection was likely revoked: reconnect it in the EmailJS dashboard (Email Services → your Gmail service → Reconnect). If it mentions a key or strict mode, check the repo secrets listed at the top of .github/workflows/contact-health.yaml. Then run this workflow again from the Actions tab.
 
           Failed run: $RUN_URL
 
