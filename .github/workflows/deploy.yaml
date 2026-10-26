@@ -35,5 +35,3 @@ jobs:
           folder: dist
           branch: gh-pages
           clean: true
-          # Branch previews live under preview/ on gh-pages; don't wipe them on a prod deploy
-          clean-exclude: preview

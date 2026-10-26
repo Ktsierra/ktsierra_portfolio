@@ -32,7 +32,7 @@ const OSS_PR_URL = 'https://github.com/aws-amplify/amplify-data/pull/671';
 export const site = {
   owner: 'Jose Sierra',
   base: 'South Florida',
-  url: 'https://ktsierra.github.io/ktsierra_portfolio/',
+  url: 'https://ktsierra.github.io/',
   title: 'Jose Sierra | Software Engineer (Full-stack, Cloud, Network, DevOps)',
   description:
     'Full-stack and cloud engineer in South Florida. I design multi-tenant AWS backends, ship React and React Native front ends, and run the network and production infrastructure of a 100-person aviation maintenance company.',

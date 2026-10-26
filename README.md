@@ -1,6 +1,6 @@
 # ktsierra_portfolio
 
-Jose Sierra's portfolio: <https://ktsierra.github.io/ktsierra_portfolio/>
+Jose Sierra's portfolio: <https://ktsierra.github.io/>
 
 The "Data Plate" design: an aviation technical manual look, with paper, ink, hairline rules and one signal orange.
 
@@ -56,7 +56,7 @@ All text lives in `src/content/`. Components never hard-code copy.
 
 ```sh
 npm install
-npm run dev      # http://localhost:5173/ktsierra_portfolio/
+npm run dev      # http://localhost:5173/
 npm run lint
 npm run build    # tsc -b, vite build, then postbuild writes 404.html
 npm run preview
@@ -64,21 +64,9 @@ npm run preview
 
 ## Deploy
 
-Pushing to `main` runs `.github/workflows/deploy.yaml`, which builds the site and publishes `dist/` to the `gh-pages` branch. The workflow leaves `preview/` alone. `npm run deploy` does the same from your machine.
+Pushing to `main` runs `.github/workflows/deploy.yaml`, which builds the site and publishes `dist/` to the `gh-pages` branch. `npm run deploy` does the same from your machine.
 
-Vite's `base` comes from `VITE_BASE` and defaults to `/ktsierra_portfolio/`.
-
-### Branch previews
-
-Pushing to `redesign/b-exhibit` runs `.github/workflows/preview.yaml`, which publishes the branch to <https://ktsierra.github.io/ktsierra_portfolio/preview/b/> on `gh-pages`. The live root is never touched.
-
-To publish by hand instead:
-
-```sh
-VITE_BASE=/ktsierra_portfolio/preview/b/ npm run build && npx gh-pages -d dist --dest preview/b --add
-```
-
-Reloading a deep link such as `/work/skyvault` inside a preview folder returns a 404. The SPA fallback only works at the root, which is fine for previews.
+The repo is `Ktsierra.github.io`, so GitHub Pages serves it at the root, <https://ktsierra.github.io/>, and Vite's `base` defaults to `/`. Links to the old address, `https://ktsierra.github.io/ktsierra_portfolio/...`, land on `404.html`, and a small script at the top of `index.html` sends them to the same page at the root.
 
 ### Regenerating the OG image and favicons
 
