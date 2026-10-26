@@ -1,0 +1,102 @@
+/*
+ * SkyVault case study.
+ *
+ * TODO (QUESTIONS.md section C):
+ *   screenshot     Q16       set `screenshot` once the getskyvault.app landing page ships
+ */
+
+import type { CaseStudy } from './types';
+
+export const skyvault: CaseStudy = {
+  slug: 'skyvault',
+  pageTitle: 'SkyVault case study | Jose Sierra',
+  description:
+    'A multi-tenant inventory and operations platform for aviation maintenance shops, designed, built and operated by one engineer.',
+  headerLabel: 'Case study 01 / SkyVault',
+  tags: [{ label: 'Case study', strong: true }, { label: 'SaaS · B2B' }, { label: 'Aviation MRO' }],
+  title: 'SkyVault',
+  lead: 'A multi-tenant inventory and operations platform for aviation maintenance shops. I’m designing, building and operating it alone: product, backend, web, mobile and infrastructure.',
+  meta: [
+    { label: 'Role', value: 'Founder & sole engineer' },
+    { label: 'Timeline', value: '2026 → Now' },
+    { label: 'Platforms', value: 'Web · iOS · Android' },
+    { label: 'Status', value: 'Pre-launch · getskyvault.app' },
+  ],
+  screenshotPlaceholder: {
+    title: '[SkyVault screenshot]',
+    body: 'Web inventory view, 16:9, plus an optional phone shot overlapping the bottom-right corner',
+  },
+  problem: [
+    'An MRO shop has to account for every unit it touches: where it is in its lifecycle, what work was performed and by whom, and which assets and consumables went into it. That traceability is what customers and auditors ask for, and the established MRO systems are built around documents rather than the evidence captured on the shop floor.',
+    'SkyVault gives the shop floor a production view for work orders, assets and consumables, with photos and video as evidence of the work, and gives customer service a client view where reps share notes and media so customers can follow their unit’s progress.',
+  ],
+  architecture: {
+    intro:
+      'Serverless on AWS, defined in TypeScript with Amplify Gen 2. Every request carries a tenant-scoped token; every business write goes through a Lambda that checks it.',
+    diagram: {
+      figure: 'Fig. 2 · System overview',
+      meta: 'Rev 2026-10',
+      ariaLabel:
+        'SkyVault architecture: web, mobile and public share-page clients call AppSync, authenticated by Cognito with four Lambda triggers; Lambda resolvers check permissions and write to DynamoDB and S3; an EventBridge cleanup job and an SES to PostHog email telemetry chain run in the background; Sentry and PostHog observe every environment',
+      tiers: [
+        [
+          { kind: 'Client · Web', title: 'TanStack Start', note: 'Per-tenant subdomains' },
+          { kind: 'Client · Mobile', title: 'Expo / React Native', note: 'iOS + Android' },
+          { kind: 'Client · Public', title: 'Share pages', note: 'Restricted media links unlocked by email OTP' },
+        ],
+        [
+          {
+            kind: 'API',
+            title: 'AWS AppSync',
+            note: 'Group-based auth on reads · pushed updates',
+            tone: 'primary',
+          },
+          {
+            kind: 'Auth',
+            title: 'Cognito · Lambda triggers',
+            note: 'Permission IDs in the token',
+            tone: 'highlight',
+          },
+        ],
+        { kind: 'Compute', title: 'Lambda resolvers', note: 'Permission check on every business operation' },
+        [
+          { kind: 'Data', title: 'DynamoDB' },
+          { kind: 'Files', title: 'S3', note: 'Bulk exports via presigned URLs' },
+        ],
+        [
+          { kind: 'Scheduled', title: 'EventBridge → cleanup λ', note: 'Daily retention and soft-delete purge' },
+          { kind: 'Email telemetry', title: 'SES → SNS → λ', note: 'Delivery events into PostHog' },
+        ],
+      ],
+      connectors: ['GraphQL queries + mutations ↓ · subscriptions ↑', 'mutations + JWT claims', null, 'background jobs'],
+      footer: { label: 'Observability', value: 'Sentry (web + backend errors) · PostHog (one project per environment)' },
+    },
+  },
+  decisions: {
+    intro: 'The calls that shape the system.',
+    items: [
+      { area: 'Auth', statement: 'Permissions travel in the access token, so AppSync enforces row access natively.' },
+      { area: 'Tenancy', statement: 'Each user’s tenant is fixed when the account is created and can never change.' },
+      { area: 'Writes', statement: 'Every business write goes through a Lambda that checks permissions. No client can delete.' },
+      { area: 'Realtime', statement: 'One custom change channel replaces the generated model subscriptions.' },
+      { area: 'Storage', statement: 'Files move only through short-lived presigned URLs, never direct S3 access.' },
+      { area: 'Compliance', statement: 'Deletes are soft, and an immutable audit log records every admin action.' },
+    ],
+  },
+  running: [
+    {
+      label: 'Environments',
+      body: 'Sandbox, dev, stage and prod, each tracked in Sentry and PostHog.',
+    },
+    { label: 'Testing', body: 'CI runs unit and integration stages; integration tests sign in through a dedicated Cognito app client and exercise the deployed API.' },
+    { label: 'Sharing', body: 'Restricted media share links, unlocked with a one-time password sent by email.' },
+    { label: 'Compliance', body: 'In-app account deletion built to App Store and Google Play requirements.' },
+  ],
+  next: ['Launching getskyvault.app.'],
+  navBand: {
+    back: 'Back to all work',
+    cta: 'Want the deep dive? Let’s talk ↗',
+  },
+  footerLabel: 'Case study 01 / SkyVault',
+};
+

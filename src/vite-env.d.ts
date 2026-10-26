@@ -2,11 +2,12 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-    readonly VITE_EMAILJS_SERVICE_ID: string;
-    readonly VITE_EMAILJS_TEMPLATE_ID: string;
-    readonly VITE_EMAILJS_PUBLIC_KEY: string;
+  /** EmailJS keys for the contact form. Without all three the form doesn't render; the email button still does. */
+  readonly VITE_EMAILJS_SERVICE_ID?: string;
+  readonly VITE_EMAILJS_TEMPLATE_ID?: string;
+  readonly VITE_EMAILJS_PUBLIC_KEY?: string;
 }
 
 interface ImportMeta {
-    readonly env: ImportMetaEnv;
+  readonly env: ImportMetaEnv;
 }

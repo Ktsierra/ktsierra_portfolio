@@ -1,51 +1,50 @@
-import { motion } from 'framer-motion';
-import { styles } from '../styles';
-import { ComputersCanvas } from './canvas';
+import { site } from '../content/site';
+import Button from './Button';
+import IdentPlate from './IdentPlate';
+import StatusPill from './StatusPill';
+import { ArrowDown, ArrowUpRight } from './icons';
 
-const Hero = () => {
+/** Left column of the hero; shared by both hero variants */
+export const HeroText = () => {
+  const { hero, status, description } = site;
   return (
-    <section className='relative w-full h-screen mx-auto'>
-
-      {/* Hero content */}
-      <div className={`${styles.paddingX}, absolute inset-0 top-[120px] max-w-7xl mx-auto flex flex-row items-start gap-5 ease-in-out duration-300`}>
-        <div className='flex flex-col justify-center items-center mt-5 ease-in-out duration-300'>
-          <div className='w-5 h-5 rounded-full bg-[#915eff]' />
-          <div className='w-1 sm:h-80 h-40 violet-gradient ease-in-out duration-300' />
-        </div>
-        <div>
-          <h1 className={`${styles.heroHeadText}, text-white ease-in-out duration-300`}> Hi, I&apos;m &nbsp;
-            <span className='text-[#915eff]'>
-              Jose Sierra
-            </span>
-          </h1>
-          <p className={`${styles.heroSubText} mt-2 text-white ease-in-out duration-300`}>
-            I&apos;m a software developer and &nbsp;
-            <br className='sm:block hidden' />
-            network engineer.
-          </p>
-        </div>
+    <div className="flex min-w-0 flex-col gap-7">
+      {status.visible && <StatusPill label={status.label} />}
+      <h1
+        id="hero-title"
+        className="m-0 text-[clamp(42px,7vw,104px)] leading-[0.98] font-extrabold tracking-[-0.025em] text-balance [font-stretch:118%]"
+      >
+        {hero.titleBefore}
+        <span className="hero-highlight">{hero.titleHighlight}</span>
+        {hero.titleAfter}
+      </h1>
+      <p className="m-0 max-w-[34em] text-[clamp(17px,1.5vw,20px)] leading-[1.55] text-pretty text-ink-2">{description}</p>
+      <div className="flex flex-wrap gap-3">
+        <Button href={hero.primaryCta.href}>
+          {hero.primaryCta.label}
+          <ArrowDown />
+        </Button>
+        <Button href={hero.secondaryCta.href} variant="secondary">{hero.secondaryCta.label}</Button>
       </div>
-
-      {/* Computers canvas */}
-      <ComputersCanvas />
-
-      {/* Scroll down */}
-      <div className='absolute xs:bottom-10 bottom-32 w-full flex justify-center items-center'>
-        <a href='#about'>
-          <div className='w-[35px] h-[64px] rounded-3xl border-4 border-secondary flex justify-center items-start p-2' >
-            <motion.div
-              animate={{ y: [0, 24, 0] }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                repeatType: 'loop',
-              }}
-              className='w-4 h-4 rounded-full bg-secondary mb-1' />
-          </div>
-        </a>
+      <div className="flex flex-wrap gap-x-6 gap-y-1 font-mono text-[13px]">
+        {hero.socials.map((l) => (
+          <a key={l.label} href={l.href} className="link link-soft inline-flex min-h-11 items-center gap-1.5">
+            {l.label}
+            <ArrowUpRight />
+          </a>
+        ))}
       </div>
-    </section>
+    </div>
   );
 };
+
+const Hero = () => (
+  <section aria-labelledby="hero-title" className="dot-grid border-b-[1.5px] border-ink">
+    <div className="wrap grid grid-cols-[repeat(auto-fit,minmax(min(460px,100%),1fr))] items-center gap-[clamp(40px,5vw,72px)] pt-[clamp(56px,8vw,120px)] pb-[clamp(56px,7vw,104px)]">
+      <HeroText />
+      <IdentPlate className="plate-in" />
+    </div>
+  </section>
+);
 
 export default Hero;

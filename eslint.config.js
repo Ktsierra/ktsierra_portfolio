@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint'
 import react from 'eslint-plugin-react'
 
 export default tseslint.config(
-  { ignores: ['dist'] },
+  { ignores: ['dist', 'scripts'] },
   {
     extends: [js.configs.recommended, 
       ...tseslint.configs.strictTypeChecked,
@@ -20,6 +20,7 @@ export default tseslint.config(
       ecmaVersion: 2020,
       globals: globals.browser,
     },
+    settings: { react: { version: 'detect' } },
     plugins: {
       react,
       'react-hooks': reactHooks,
@@ -47,26 +48,6 @@ export default tseslint.config(
       'comma-spacing': ['error', { 'before': false, 'after': true }],
       'semi': ['warn', 'always'],
       'react/prop-types': 'off',
-      'react/no-unknown-property': ['error', { ignore: [
-        'intensity',
-        'groundColor', 
-        'object',
-        'position',
-        'rotation',
-        'scale',
-        'decay',
-        'angle',
-        'penumbra',
-        'castShadow',
-        'shadow-mapSize',
-        'receiveShadow',
-        'args',
-        'polygonOffset',
-        'polygonOffsetFactor',
-        'flatShading',
-        'position-y',
-        'rotation-y',
-        ] }],
     },
   },
 )
