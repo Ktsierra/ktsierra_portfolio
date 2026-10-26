@@ -13,6 +13,8 @@ const ContactForm = () => {
   const { form } = site.contact;
   const id = useId();
   const [status, setStatus] = useState<Status>('idle');
+  // When EmailJS fails, the visitor's message moves to a prefilled mailto so it isn't lost
+  const [fallback, setFallback] = useState('');
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,6 +30,9 @@ const ContactForm = () => {
       return;
     }
     setStatus('sending');
+    const subject = `${form.mailSubject} ${get('name')}`;
+    const body = `${get('message')}\n\n${get('name')} · ${get('email')}`;
+    setFallback(`${site.links.mailto}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
     sendEmail({
       from_name: get('name'),
       from_email: get('email'),
@@ -74,7 +79,12 @@ const ContactForm = () => {
         </button>
         <p role="status" aria-live="polite" className="m-0 text-[15px] font-medium">
           {status === 'sent' && form.sent}
-          {status === 'error' && form.error}
+          {status === 'error' && (
+            <>
+              {form.error}{' '}
+              <a href={fallback} className="link link-on-signal underline-offset-4">{form.errorLink}</a>
+            </>
+          )}
         </p>
       </div>
     </form>

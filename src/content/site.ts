@@ -357,7 +357,9 @@ export const site = {
       submit: 'Send message',
       sending: 'Sending…',
       sent: 'Thanks, message sent. I’ll reply by email.',
-      error: `Couldn’t send it. Email me at ${EMAIL} instead.`,
+      error: 'Couldn’t send it.',
+      errorLink: 'Open it in your email app',
+      mailSubject: 'Portfolio message from',
     },
   },
 
