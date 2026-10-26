@@ -91,7 +91,10 @@ jobs:
 
           EmailJS said: \`$said\`
 
-          If that mentions Gmail or the service, the Gmail connection was likely revoked: reconnect it in the EmailJS dashboard (Email Services → your Gmail service → Reconnect). If it mentions a key or strict mode, check the repo secrets listed at the top of .github/workflows/contact-health.yaml. Then run this workflow again from the Actions tab.
+          - Mentions Gmail (for example an invalid grant or a disconnected account): the Gmail connection was revoked. Reconnect it in the EmailJS dashboard (Email Services → your Gmail service → Reconnect).
+          - Mentions a service ID, template ID, public or private key, or strict mode: a repo secret is missing or wrong. Check VITE_EMAILJS_SERVICE_ID, EMAILJS_HEALTH_TEMPLATE_ID, VITE_EMAILJS_PUBLIC_KEY and EMAILJS_PRIVATE_KEY (setup notes at the top of .github/workflows/contact-health.yaml).
+
+          Then run this workflow again from the Actions tab.
 
           Failed run: $RUN_URL
 

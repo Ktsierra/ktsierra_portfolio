@@ -4,6 +4,9 @@ on:
   push:
     branches: [ main ]
 
+permissions:
+  contents: read
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -12,6 +15,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+        with:
+          # Don't leave the write token in .git/config, where npm install/build scripts could read it.
+          # The deploy step below gets the token explicitly instead.
+          persist-credentials: false
       
       - name: Set up Node.js
         uses: actions/setup-node@v5
@@ -32,6 +39,7 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
+          token: ${{ github.token }}
           folder: dist
           branch: gh-pages
           clean: true
