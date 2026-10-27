@@ -60,13 +60,14 @@ const CaseStudy = () => {
       <section aria-label="Product screenshot" className="border-b-[1.5px] border-ink bg-panel">
         <div className="wrap py-[clamp(32px,4vw,56px)]">
           {cs.screenshot ? (
-            <div className="relative">
+            // The bottom margin (a share of the width, like the phone) leaves room for the phone's overhang
+            <div className={cs.screenshot.phone ? 'relative mb-[6%]' : 'relative'}>
               <img
                 src={cs.screenshot.src}
                 alt={cs.screenshot.alt}
                 width={cs.screenshot.width}
                 height={cs.screenshot.height}
-                className="block h-auto w-full border-[1.5px] border-ink"
+                className="block h-auto w-full"
               />
               {cs.screenshot.phone && (
                 <img
@@ -75,7 +76,7 @@ const CaseStudy = () => {
                   width={cs.screenshot.phone.width}
                   height={cs.screenshot.phone.height}
                   loading="lazy"
-                  className="absolute right-[3%] -bottom-[6%] h-auto w-[18%] border-[1.5px] border-ink"
+                  className="absolute right-[3%] -bottom-[12%] h-auto w-[18%] drop-shadow-[0_8px_16px_rgb(16_19_23/0.28)]"
                 />
               )}
             </div>

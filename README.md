@@ -66,6 +66,8 @@ npm run preview
 
 Pushing to `main` runs `.github/workflows/deploy.yaml`, which builds the site and publishes `dist/` to the `gh-pages` branch. `npm run deploy` does the same from your machine.
 
+Pushing to `dev` runs `.github/workflows/dev-preview.yaml`, which builds with `VITE_BASE=/dev/` and publishes to `gh-pages/dev`, so the preview is at <https://ktsierra.github.io/dev/>. Preview builds carry a `noindex` meta tag, and main deploys leave the `dev/` folder in place. To republish it, run "Deploy dev preview" from the Actions tab (it always builds `dev`).
+
 The repo is `Ktsierra.github.io`, so GitHub Pages serves it at the root, <https://ktsierra.github.io/>, and Vite's `base` defaults to `/`. Links to the old address, `https://ktsierra.github.io/ktsierra_portfolio/...`, land on `404.html`, and a small script at the top of `index.html` sends them to the same page at the root.
 
 ### Regenerating the OG image and favicons

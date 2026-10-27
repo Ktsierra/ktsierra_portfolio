@@ -1,0 +1,62 @@
+name: Deploy dev preview
+
+# Pushing to the dev branch publishes it to https://ktsierra.github.io/dev/, next to the live site.
+# The build is marked noindex (robots.txt doesn't block /dev/, so crawlers can see that tag),
+# and deploy.yaml leaves the dev/ folder alone when main deploys.
+
+on:
+  push:
+    branches: [ dev ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Both workflows push to gh-pages, so they take turns
+concurrency:
+  group: gh-pages
+  # Keep every pending run; the default single slot would let a dev run replace a waiting main deploy
+  queue: max
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          # A manual run can be started from any branch (main by default); always publish dev
+          ref: ${{ github.event_name == 'workflow_dispatch' && 'dev' || github.sha }}
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+        env:
+          VITE_BASE: /dev/
+          VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
+          VITE_EMAILJS_SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID }}
+          VITE_EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}
+
+      - name: Deploy to gh-pages/dev
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          token: ${{ github.token }}
+          folder: dist
+          branch: gh-pages
+          target-folder: dev
+          clean: true

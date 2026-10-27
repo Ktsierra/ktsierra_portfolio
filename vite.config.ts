@@ -25,8 +25,16 @@ const preloadFonts = (): Plugin => ({
   },
 });
 
+/** Subfolder builds (the /dev/ preview) ask search engines not to index them */
+const noindexPreview = (): Plugin => ({
+  name: 'noindex-preview',
+  apply: 'build',
+  transformIndexHtml: () =>
+    base === '/' ? [] : [{ tag: 'meta', attrs: { name: 'robots', content: 'noindex' }, injectTo: 'head' as const }],
+});
+
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [tailwindcss(), react(), preloadFonts()],
+  plugins: [tailwindcss(), react(), preloadFonts(), noindexPreview()],
   base,
 });
