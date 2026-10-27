@@ -1,7 +1,8 @@
 name: Deploy dev preview
 
 # Pushing to the dev branch publishes it to https://ktsierra.github.io/dev/, next to the live site.
-# The build is marked noindex, and deploy.yaml leaves the dev/ folder alone when main deploys.
+# The build is marked noindex (robots.txt doesn't block /dev/, so crawlers can see that tag),
+# and deploy.yaml leaves the dev/ folder alone when main deploys.
 
 on:
   push:
@@ -14,6 +15,8 @@ permissions:
 # Both workflows push to gh-pages, so they take turns
 concurrency:
   group: gh-pages
+  # Keep every pending run; the default single slot would let a dev run replace a waiting main deploy
+  queue: max
   cancel-in-progress: false
 
 jobs:
@@ -25,6 +28,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
         with:
+          # A manual run can be started from any branch (main by default); always publish dev
+          ref: ${{ github.event_name == 'workflow_dispatch' && 'dev' || github.sha }}
           persist-credentials: false
 
       - name: Set up Node.js

@@ -10,6 +10,8 @@ permissions:
 # Both this and dev-preview.yaml push to gh-pages, so they take turns
 concurrency:
   group: gh-pages
+  # Keep every pending run; the default single slot would let a dev run replace a waiting main deploy
+  queue: max
   cancel-in-progress: false
 
 jobs:
