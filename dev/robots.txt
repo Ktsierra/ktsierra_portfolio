@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /dev/
 
 Sitemap: https://ktsierra.github.io/sitemap.xml
