@@ -7,6 +7,11 @@ on:
 permissions:
   contents: read
 
+# Both this and dev-preview.yaml push to gh-pages, so they take turns
+concurrency:
+  group: gh-pages
+  cancel-in-progress: false
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -43,3 +48,5 @@ jobs:
           folder: dist
           branch: gh-pages
           clean: true
+          # dev-preview.yaml publishes the dev branch to /dev/; keep it when main deploys
+          clean-exclude: dev

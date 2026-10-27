@@ -1,8 +1,8 @@
 /*
  * SkyVault case study.
  *
- * TODO (QUESTIONS.md section C):
- *   screenshot     Q16       set `screenshot` once the getskyvault.app landing page ships
+ * The screenshots are captures of the SkyVault design mockup (Orders view): the web app in dark mode,
+ * with the phone layout in light mode overlapping its corner.
  */
 
 import type { CaseStudy } from './types';
@@ -22,6 +22,18 @@ export const skyvault: CaseStudy = {
     { label: 'Platforms', value: 'Web · iOS · Android' },
     { label: 'Status', value: 'Pre-launch · getskyvault.app' },
   ],
+  screenshot: {
+    src: `${import.meta.env.BASE_URL}work/skyvault-orders-dark.webp`,
+    alt: 'SkyVault web app in dark mode: the Orders list for a repair shop, showing each work order’s type, part number, current step, assignee and status.',
+    width: 2400,
+    height: 1004,
+    phone: {
+      src: `${import.meta.env.BASE_URL}work/skyvault-orders-phone-light.webp`,
+      alt: 'The same Orders list on a phone, in light mode.',
+      width: 640,
+      height: 1338,
+    },
+  },
   screenshotPlaceholder: {
     title: '[SkyVault screenshot]',
     body: 'Web inventory view, 16:9, plus an optional phone shot overlapping the bottom-right corner',
